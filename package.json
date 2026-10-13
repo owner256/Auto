@@ -1,0 +1,15 @@
+{
+  "name": "yt-automation-turbo",
+  "version": "2.0.0",
+  "description": "High-Speed Scalable YouTube Multi-Browser Cluster Engine",
+  "main": "server.js",
+  "scripts": {
+    "start": "node --max-old-space-size=4096 server.js",
+    "cli": "node --max-old-space-size=4096 cli.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.3.0",
+    "puppeteer": "^25.13.0"
+  }
+}

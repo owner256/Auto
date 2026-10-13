@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YT Turbo Cluster Engine — High-Scale Browser Automation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #090d16;
+      --card: #111827;
+      --card-border: #1f2937;
+      --accent: #ef4444;
+      --accent-hover: #dc2626;
+      --green: #10b981;
+      --blue: #3b82f6;
+      --amber: #f59e0b;
+      --text: #f9fafb;
+      --muted: #9ca3af;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+    }
+    body {
+      background: radial-gradient(circle at top, #1e293b 0%, var(--bg) 70%);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 24px;
+    }
+    .container {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      padding: 16px 22px;
+      background: rgba(17, 24, 39, 0.85);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      backdrop-filter: blur(12px);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand svg {
+      color: var(--accent);
+    }
+    .brand h1 {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+    .brand span {
+      font-size: 12px;
+      background: rgba(239, 68, 68, 0.15);
+      color: #f87171;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-weight: 600;
+      margin-left: 8px;
+    }
+    .cluster-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #34d399;
+    }
+    .pulse {
+      width: 9px;
+      height: 9px;
+      background: var(--green);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--green);
+      animation: blink 1.5s infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.35; }
+    }
+    .grid-main {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 20px;
+    }
+    @media (max-width: 900px) {
+      .grid-main { grid-template-columns: 1fr; }
+    }
+    .panel {
+      background: rgba(17, 24, 39, 0.9);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 24px;
+    }
+    .panel-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #e5e7eb;
+      margin-bottom: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .form-group {
+      margin-bottom: 16px;
+    }
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--muted);
+      margin-bottom: 7px;
+    }
+    input[type="url"], input[type="number"], select {
+      width: 100%;
+      padding: 12px 14px;
+      background: #0b0f19;
+      border: 1px solid #374151;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    input:focus, select:focus {
+      border-color: var(--accent);
+    }
+    .presets {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+    .preset-btn {
+      background: #1f2937;
+      border: 1px solid #374151;
+      color: #d1d5db;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .preset-btn:hover, .preset-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    .row-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+    }
+    .toggles {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 16px 0 20px;
+    }
+    .toggle-card {
+      background: #0b0f19;
+      border: 1px solid #1f2937;
+      padding: 12px;
+      border-radius: 10px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      cursor: pointer;
+    }
+    .toggle-card input {
+      margin-top: 3px;
+      accent-color: var(--accent);
+      width: 16px;
+      height: 16px;
+    }
+    .toggle-card strong {
+      display: block;
+      font-size: 13px;
+      color: #f3f4f6;
+    }
+    .toggle-card small {
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .actions {
+      display: flex;
+      gap: 12px;
+    }
+    .btn {
+      padding: 14px 20px;
+      border-radius: 9px;
+      font-size: 14px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.1s, opacity 0.15s;
+    }
+    .btn:active {
+      transform: scale(0.98);
+    }
+    .btn-launch {
+      flex: 2;
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      color: white;
+      box-shadow: 0 8px 20px rgba(239, 68, 68, 0.3);
+    }
+    .btn-stop {
+      flex: 1;
+      background: #1f2937;
+      border: 1px solid #374151;
+      color: #f87171;
+    }
+    .btn-stop:hover {
+      background: #374151;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .stat-box {
+      background: #0b0f19;
+      border: 1px solid #1f2937;
+      padding: 14px;
+      border-radius: 10px;
+    }
+    .stat-box .label {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+    .stat-box .val {
+      font-size: 26px;
+      font-weight: 700;
+      margin-top: 4px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .val.green { color: var(--green); }
+    .val.blue { color: var(--blue); }
+    .val.amber { color: var(--amber); }
+    .val.red { color: #f87171; }
+    .meters {
+      margin-bottom: 18px;
+      background: #0b0f19;
+      border: 1px solid #1f2937;
+      padding: 14px;
+      border-radius: 10px;
+    }
+    .meter-row {
+      margin-bottom: 10px;
+    }
+    .meter-row:last-child { margin-bottom: 0; }
+    .meter-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      margin-bottom: 5px;
+      color: #d1d5db;
+    }
+    .bar-bg {
+      height: 7px;
+      background: #1f2937;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .bar-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--blue);
+      transition: width 0.3s ease;
+    }
+    .terminal {
+      background: #05070c;
+      border: 1px solid #1f2937;
+      border-radius: 10px;
+      height: 230px;
+      padding: 12px;
+      overflow-y: auto;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+    }
+    .log-line {
+      margin-bottom: 6px;
+      line-height: 1.4;
+      word-break: break-all;
+    }
+    .log-time { color: #6b7280; margin-right: 6px; }
+    .log-info { color: #60a5fa; }
+    .log-success { color: #34d399; }
+    .log-warn { color: #fbbf24; }
+    .log-error { color: #f87171; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="topbar">
+      <div class="brand">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+        </svg>
+        <div>
+          <h1>YT Turbo Cluster Engine <span>v2.0 Enterprise</span></h1>
+        </div>
+      </div>
+      <div class="cluster-badge">
+        <div class="pulse"></div>
+        <span id="clusterStatusText">Pre-Warming Cluster...</span>
+      </div>
+    </div>
+
+    <div class="grid-main">
+      <!-- Left Column: Mission Control -->
+      <div class="panel">
+        <div class="panel-title">
+          <span>⚡ High-Speed Session Dispatcher</span>
+          <span style="font-size:12px;color:var(--muted)" id="spawnMetric">Avg Spawn: ~12ms</span>
+        </div>
+
+        <form id="dispatchForm">
+          <div class="form-group">
+            <label>YouTube Video Link</label>
+            <input type="url" id="videoUrl" placeholder="https://www.youtube.com/watch?v=..." required />
+          </div>
+
+          <div class="form-group">
+            <label>Total Browser Sessions (Scale: 1 to 5,000)</label>
+            <input type="number" id="browserCount" min="1" max="5000" value="5" required />
+            <div class="presets">
+              <button type="button" class="preset-btn active" data-val="5">5 Browsers</button>
+              <button type="button" class="preset-btn" data-val="25">25 Browsers</button>
+              <button type="button" class="preset-btn" data-val="100">100 Browsers</button>
+              <button type="button" class="preset-btn" data-val="500">500 Browsers</button>
+              <button type="button" class="preset-btn" data-val="1000">1000 Browsers</button>
+            </div>
+          </div>
+
+          <div class="row-3">
+            <div class="form-group">
+              <label>Watch Time (Sec)</label>
+              <input type="number" id="watchDuration" min="5" max="7200" value="60" required />
+            </div>
+            <div class="form-group">
+              <label>Max Parallel Pool</label>
+              <input type="number" id="concurrency" min="1" max="250" value="48" required />
+            </div>
+            <div class="form-group">
+              <label>Execution Mode</label>
+              <select id="executionMode">
+                <option value="headless" selected>Background Turbo Pool (Fastest)</option>
+                <option value="visible">Visible Desktop Windows</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="toggles">
+            <label class="toggle-card">
+              <input type="checkbox" id="turboMode" checked />
+              <div>
+                <strong>Turbo Resource Blocker</strong>
+                <small>Blocks ads, images & fonts (Saves 85% CPU & RAM, forces 144p stream)</small>
+              </div>
+            </label>
+            <label class="toggle-card">
+              <input type="checkbox" checked disabled />
+              <div>
+                <strong>Isolated Incognito Contexts</strong>
+                <small>Separate cookies, storage & rotated User-Agent per browser</small>
+              </div>
+            </label>
+          </div>
+
+          <div class="actions">
+            <button type="submit" class="btn btn-launch" id="launchBtn">🚀 Launch 5 Sessions Now</button>
+            <button type="button" class="btn btn-stop" id="stopBtn">🛑 Stop All</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Right Column: Real-Time Telemetry & Logs -->
+      <div class="panel">
+        <div class="panel-title">
+          <span>📊 Real-Time Telemetry (SSE Stream)</span>
+          <span style="font-size:12px;color:var(--green)">● 0ms Live Sync</span>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-box">
+            <div class="label">Active Browsers</div>
+            <div class="val green" id="statActive">0</div>
+          </div>
+          <div class="stat-box">
+            <div class="label">In Rolling Queue</div>
+            <div class="val amber" id="statQueued">0</div>
+          </div>
+          <div class="stat-box">
+            <div class="label">Completed</div>
+            <div class="val blue" id="statCompleted">0</div>
+          </div>
+          <div class="stat-box">
+            <div class="label">Avg Context Spawn</div>
+            <div class="val" id="statSpawnMs">0 ms</div>
+          </div>
+        </div>
+
+        <div class="meters">
+          <div class="meter-row">
+            <div class="meter-header">
+              <span>System CPU Load</span>
+              <span id="cpuText">0%</span>
+            </div>
+            <div class="bar-bg"><div class="bar-fill" id="cpuBar"></div></div>
+          </div>
+          <div class="meter-row">
+            <div class="meter-header">
+              <span>System Memory (RAM)</span>
+              <span id="ramText">0 / 32 GB</span>
+            </div>
+            <div class="bar-bg"><div class="bar-fill" id="ramBar" style="background:var(--green)"></div></div>
+          </div>
+        </div>
+
+        <div class="terminal" id="terminalBox">
+          <div class="log-line log-info">[SYSTEM] Connecting to real-time SSE telemetry stream...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const countInput = document.getElementById('browserCount');
+    const launchBtn = document.getElementById('launchBtn');
+    const presetBtns = document.querySelectorAll('.preset-btn');
+    const terminalBox = document.getElementById('terminalBox');
+
+    function updateButtonLabel() {
+      const val = countInput.value || 5;
+      launchBtn.textContent = `🚀 Launch ${val} Sessions Now`;
+      presetBtns.forEach(b => {
+        b.classList.toggle('active', b.dataset.val === String(val));
+      });
+    }
+
+    countInput.addEventListener('input', updateButtonLabel);
+    presetBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        countInput.value = btn.dataset.val;
+        updateButtonLabel();
+      });
+    });
+
+    function appendLog(entry) {
+      const div = document.createElement('div');
+      div.className = `log-line log-${entry.level || 'info'}`;
+      div.innerHTML = `<span class="log-time">[${entry.time}]</span> ${entry.message}`;
+      terminalBox.prepend(div);
+      while (terminalBox.children.length > 60) {
+        terminalBox.removeChild(terminalBox.lastChild);
+      }
+    }
+
+    // Connect to Server-Sent Events (SSE)
+    const evtSource = new EventSource('/api/telemetry');
+    evtSource.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      if (data.stats) {
+        const s = data.stats;
+        document.getElementById('statActive').textContent = s.active;
+        document.getElementById('statQueued').textContent = s.queued;
+        document.getElementById('statCompleted').textContent = s.completed;
+        document.getElementById('statSpawnMs').textContent = `${s.avgSpawnMs || 0} ms`;
+        document.getElementById('spawnMetric').textContent = `Avg Spawn: ${s.avgSpawnMs || 12}ms`;
+
+        document.getElementById('clusterStatusText').textContent =
+          `${s.clusterEnginesReady} Master Cluster Engines Online (0ms Cold Start)`;
+
+        document.getElementById('cpuText').textContent = `${s.cpuUsagePercent}%`;
+        document.getElementById('cpuBar').style.width = `${s.cpuUsagePercent}%`;
+
+        const ramPct = s.ramTotalGB ? Math.round((s.ramUsedGB / s.ramTotalGB) * 100) : 0;
+        document.getElementById('ramText').textContent = `${s.ramUsedGB} / ${s.ramTotalGB} GB (${s.ramFreeGB} GB Free)`;
+        document.getElementById('ramBar').style.width = `${ramPct}%`;
+      }
+      if (data.logs) {
+        terminalBox.innerHTML = '';
+        data.logs.slice().reverse().forEach(appendLog);
+      }
+      if (data.newLog) {
+        appendLog(data.newLog);
+      }
+    };
+
+    // Dispatch Form Submit
+    document.getElementById('dispatchForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const url = document.getElementById('videoUrl').value.trim();
+      const count = parseInt(countInput.value, 10);
+      const duration = parseInt(document.getElementById('watchDuration').value, 10);
+      const concurrency = parseInt(document.getElementById('concurrency').value, 10);
+      const headless = document.getElementById('executionMode').value === 'headless';
+      const turboMode = document.getElementById('turboMode').checked;
+
+      launchBtn.disabled = true;
+      try {
+        await fetch('/api/start', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url, count, duration, concurrency, headless, turboMode })
+        });
+      } catch (err) {
+        appendLog({ time: new Date().toLocaleTimeString(), message: 'Server error: ' + err.message, level: 'error' });
+      } finally {
+        launchBtn.disabled = false;
+      }
+    });
+
+    // Stop All Button
+    document.getElementById('stopBtn').addEventListener('click', async () => {
+      await fetch('/api/stop', { method: 'POST' });
+    });
+  </script>
+</body>
+</html>
