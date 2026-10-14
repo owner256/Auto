@@ -49,14 +49,14 @@ async function runCli() {
 
   // Monitor until queue and active sessions finish
   const checkInterval = setInterval(async () => {
-    const { active, queued, completed, failed, avgSpawnMs, ramUsedGB } = telemetry.stats;
+    const { active, queued, completed, failed, retrying, autoRecovered, avgSpawnMs, ramUsedGB } = telemetry.stats;
 
-    if (active === 0 && queued === 0 && completed + failed >= count) {
+    if (active === 0 && queued === 0 && completed >= count) {
       clearInterval(checkInterval);
       await browserPool.shutdownCluster();
       console.log(
         `\n=============================================================\n` +
-        `✅ ALL SESSIONS FINISHED! | Completed: ${completed}/${count} | Failed: ${failed} | Avg Spawn: ${avgSpawnMs}ms | RAM Used: ${ramUsedGB}GB\n` +
+        `✅ 100% TARGET COMPLETED! | Target: ${count}/${count} | Recovered: ${autoRecovered || 0} | Avg Spawn: ${avgSpawnMs}ms | RAM: ${ramUsedGB}GB\n` +
         `=============================================================\n`
       );
       process.exit(0);

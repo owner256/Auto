@@ -9,6 +9,8 @@ class TelemetryService {
       active: 0,
       completed: 0,
       failed: 0,
+      retrying: 0,
+      autoRecovered: 0,
       totalRequested: 0,
       avgSpawnMs: 0,
       clusterEnginesReady: 0,

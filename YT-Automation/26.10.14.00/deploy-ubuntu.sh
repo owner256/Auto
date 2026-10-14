@@ -16,8 +16,9 @@ sudo apt-get install -y nodejs
 echo "=== [3/5] Installing PM2 Process Manager ==="
 sudo npm install -g pm2
 
-echo "=== [4/5] Installing Project Dependencies ==="
+echo "=== [4/5] Installing Project Dependencies & Puppeteer Chrome ==="
 npm install --production
+npx puppeteer browsers install chrome || true
 
 echo "=== [5/5] Starting YT Turbo Cluster with PM2 ==="
 pm2 delete yt-engine 2>/dev/null || true

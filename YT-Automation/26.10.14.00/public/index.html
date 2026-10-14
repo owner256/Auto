@@ -485,7 +485,8 @@
         const s = data.stats;
         document.getElementById('statActive').textContent = s.active;
         document.getElementById('statQueued').textContent = s.queued;
-        document.getElementById('statCompleted').textContent = s.completed;
+        document.getElementById('statCompleted').textContent =
+          s.autoRecovered > 0 ? `${s.completed} (🎯 +${s.autoRecovered} recovered)` : s.completed;
         document.getElementById('statSpawnMs').textContent = `${s.avgSpawnMs || 0} ms`;
         document.getElementById('spawnMetric').textContent = `Avg Spawn: ${s.avgSpawnMs || 12}ms`;
 

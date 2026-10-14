@@ -109,6 +109,16 @@ class BrowserPool {
         unit = await this._createIsolatedContextUnit();
       }
 
+      // Resilient fallback: If cluster engines crashed or disconnected, re-warm and retry
+      if (!unit || !unit.context || !unit.page) {
+        await this.warmUpCluster(DEFAULT_CLUSTER_SIZE);
+        unit = this.hotStandbyPool.shift() || (await this._createIsolatedContextUnit());
+      }
+
+      if (!unit || !unit.page) {
+        throw new Error('Chromium cluster unavailable. Re-initializing engine...');
+      }
+
       const spawnMs = Math.max(1, Date.now() - startTime);
       telemetry.recordSpawnTime(spawnMs);
 

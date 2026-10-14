@@ -13,12 +13,16 @@ class ResourceOptimizer {
         if (videoId) return `https://www.youtube.com/watch?v=${videoId}`;
       }
       if (parsed.hostname.includes('youtube.com')) {
+        if (parsed.pathname.startsWith('/embed/')) {
+          const videoId = parsed.pathname.split('/embed/')[1]?.split('/')[0]?.split('?')[0];
+          if (videoId) return `https://www.youtube.com/watch?v=${videoId}`;
+        }
         if (parsed.pathname.startsWith('/shorts/')) {
-          const videoId = parsed.pathname.split('/shorts/')[1]?.split('/')[0];
+          const videoId = parsed.pathname.split('/shorts/')[1]?.split('/')[0]?.split('?')[0];
           if (videoId) return `https://www.youtube.com/watch?v=${videoId}`;
         }
         if (parsed.pathname.startsWith('/live/')) {
-          const videoId = parsed.pathname.split('/live/')[1]?.split('/')[0];
+          const videoId = parsed.pathname.split('/live/')[1]?.split('/')[0]?.split('?')[0];
           if (videoId) return `https://www.youtube.com/watch?v=${videoId}`;
         }
       }
