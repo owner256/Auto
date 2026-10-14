@@ -1,0 +1,17 @@
+services:
+  yt-automation:
+    build: .
+    container_name: yt_turbo_engine
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - NODE_OPTIONS=--max-old-space-size=4096
+      - UV_THREADPOOL_SIZE=32
+    # Shared memory size is critical for running multiple Chromium instances in Docker
+    shm_size: '4gb'
+    ulimits:
+      nofile:
+        soft: 65536
+        hard: 65536
