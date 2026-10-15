@@ -1,0 +1,25 @@
+[
+  {
+    "title": "Campaign Video 1 - Organic YouTube Search",
+    "url": "https://www.youtube.com/watch?v=VIDEO_ID_1",
+    "count": 1000,
+    "duration": 60,
+    "trafficSource": "search",
+    "searchKeyword": "Tutorial React Native 2026"
+  },
+  {
+    "title": "Campaign Video 2 - Social Referrer Traffic",
+    "url": "https://www.youtube.com/watch?v=VIDEO_ID_2",
+    "count": 2500,
+    "duration": 45,
+    "trafficSource": "referrer"
+  },
+  {
+    "title": "Campaign Video 3 - Direct View with Rotating Proxy",
+    "url": "https://www.youtube.com/watch?v=VIDEO_ID_3",
+    "count": 500,
+    "duration": 90,
+    "trafficSource": "direct",
+    "proxy": "http://customer-user:pass123@gate.smartproxy.com:7000"
+  }
+]

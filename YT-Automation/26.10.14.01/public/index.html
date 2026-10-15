@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YT Turbo Cluster Engine — Enterprise Automation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #090d16;
+      --card: #111827;
+      --card-border: #1f2937;
+      --accent: #ef4444;
+      --accent-hover: #dc2626;
+      --green: #10b981;
+      --blue: #3b82f6;
+      --amber: #f59e0b;
+      --purple: #8b5cf6;
+      --text: #f9fafb;
+      --muted: #9ca3af;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Inter', sans-serif;
+    }
+    body {
+      background: radial-gradient(circle at top, #1e293b 0%, var(--bg) 70%);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 24px;
+    }
+    .container {
+      max-width: 1250px;
+      margin: 0 auto;
+    }
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+      padding: 16px 22px;
+      background: rgba(17, 24, 39, 0.85);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      backdrop-filter: blur(12px);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand svg {
+      color: var(--accent);
+    }
+    .brand h1 {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: -0.3px;
+    }
+    .brand span {
+      font-size: 12px;
+      background: rgba(239, 68, 68, 0.15);
+      color: #f87171;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-weight: 600;
+      margin-left: 8px;
+    }
+    .cluster-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #34d399;
+    }
+    .pulse {
+      width: 9px;
+      height: 9px;
+      background: var(--green);
+      border-radius: 50%;
+      box-shadow: 0 0 8px var(--green);
+      animation: blink 1.5s infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.35; }
+    }
+    .grid-main {
+      display: grid;
+      grid-template-columns: 1.18fr 0.82fr;
+      gap: 20px;
+    }
+    @media (max-width: 950px) {
+      .grid-main { grid-template-columns: 1fr; }
+    }
+    .panel {
+      background: rgba(17, 24, 39, 0.9);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      padding: 24px;
+    }
+    .panel-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: #e5e7eb;
+      margin-bottom: 18px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .mode-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 18px;
+      background: #0b0f19;
+      padding: 4px;
+      border-radius: 9px;
+      border: 1px solid #1f2937;
+    }
+    .tab-btn {
+      flex: 1;
+      padding: 10px;
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 7px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .tab-btn.active {
+      background: #1f2937;
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+    }
+    .form-group {
+      margin-bottom: 16px;
+    }
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--muted);
+      margin-bottom: 7px;
+    }
+    input[type="url"], input[type="number"], input[type="text"], select {
+      width: 100%;
+      padding: 12px 14px;
+      background: #0b0f19;
+      border: 1px solid #374151;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 14px;
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    input:focus, select:focus {
+      border-color: var(--accent);
+    }
+    .input-with-btn {
+      display: flex;
+      gap: 8px;
+    }
+    .btn-sub {
+      background: #1f2937;
+      border: 1px solid #374151;
+      color: #d1d5db;
+      padding: 0 16px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s;
+    }
+    .btn-sub:hover {
+      background: #374151;
+      color: #fff;
+    }
+    .presets {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+    .preset-btn {
+      background: #1f2937;
+      border: 1px solid #374151;
+      color: #d1d5db;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .preset-btn:hover, .preset-btn.active {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    .row-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+    }
+    .row-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    .enterprise-card {
+      background: #080c14;
+      border: 1px solid #1f2937;
+      border-radius: 10px;
+      padding: 16px;
+      margin-bottom: 18px;
+    }
+    .enterprise-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #93c5fd;
+      border-bottom: 1px solid #1f2937;
+      padding-bottom: 8px;
+    }
+    .toggles {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin-top: 12px;
+    }
+    .toggle-card {
+      background: #0b0f19;
+      border: 1px solid #1f2937;
+      padding: 10px 12px;
+      border-radius: 8px;
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      cursor: pointer;
+    }
+    .toggle-card input {
+      margin-top: 3px;
+      accent-color: var(--accent);
+      width: 16px;
+      height: 16px;
+    }
+    .toggle-card strong {
+      display: block;
+      font-size: 12px;
+      color: #f3f4f6;
+    }
+    .toggle-card small {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.2;
+    }
+    .actions {
+      display: flex;
+      gap: 12px;
+    }
+    .btn {
+      padding: 14px 20px;
+      border-radius: 9px;
+      font-size: 14px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.1s, opacity 0.15s;
+    }
+    .btn:active {
+      transform: scale(0.98);
+    }
+    .btn-launch {
+      flex: 2;
+      background: linear-gradient(135deg, #ef4444, #dc2626);
+      color: white;
+      box-shadow: 0 8px 20px rgba(239, 68, 68, 0.3);
+    }
+    .btn-stop {
+      flex: 1;
+      background: #1f2937;
+      border: 1px solid #374151;
+      color: #f87171;
+    }
+    .btn-stop:hover {
+      background: #374151;
+    }
+    /* Multi-video Campaign Rows */
+    .campaign-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 14px;
+      max-height: 280px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+    .campaign-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr auto;
+      gap: 8px;
+      align-items: center;
+      background: #0b0f19;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #1f2937;
+    }
+    .btn-remove {
+      background: #1f2937;
+      border: 1px solid #374151;
+      color: #f87171;
+      border-radius: 6px;
+      width: 34px;
+      height: 38px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+    .btn-remove:hover {
+      background: #dc2626;
+      color: white;
+    }
+    .btn-add-row {
+      background: #1f2937;
+      border: 1px dashed #4b5563;
+      color: #93c5fd;
+      padding: 10px;
+      border-radius: 8px;
+      width: 100%;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      transition: all 0.15s;
+    }
+    .btn-add-row:hover {
+      background: #374151;
+      color: #fff;
+    }
+    /* Stats & Meters */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    .stat-box {
+      background: #0b0f19;
+      border: 1px solid #1f2937;
+      padding: 14px;
+      border-radius: 10px;
+    }
+    .stat-box .label {
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+    .stat-box .val {
+      font-size: 24px;
+      font-weight: 700;
+      margin-top: 4px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .val.green { color: var(--green); }
+    .val.blue { color: var(--blue); }
+    .val.amber { color: var(--amber); }
+    .meters {
+      margin-bottom: 18px;
+      background: #0b0f19;
+      border: 1px solid #1f2937;
+      padding: 14px;
+      border-radius: 10px;
+    }
+    .meter-row {
+      margin-bottom: 10px;
+    }
+    .meter-row:last-child { margin-bottom: 0; }
+    .meter-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      margin-bottom: 5px;
+      color: #d1d5db;
+    }
+    .bar-bg {
+      height: 7px;
+      background: #1f2937;
+      border-radius: 999px;
+      overflow: hidden;
+    }
+    .bar-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--blue);
+      transition: width 0.3s ease;
+    }
+    /* Live Campaign Cards */
+    .campaign-cards {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 18px;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+    .camp-card {
+      background: #0b0f19;
+      border: 1px solid #1f2937;
+      border-radius: 10px;
+      padding: 12px 14px;
+    }
+    .camp-card-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .camp-card-title {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 250px;
+      color: #f3f4f6;
+    }
+    .camp-card-meta {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 5px;
+      display: flex;
+      justify-content: space-between;
+    }
+    .terminal {
+      background: #05070c;
+      border: 1px solid #1f2937;
+      border-radius: 10px;
+      height: 180px;
+      padding: 12px;
+      overflow-y: auto;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+    }
+    .log-line {
+      margin-bottom: 6px;
+      line-height: 1.4;
+      word-break: break-all;
+    }
+    .log-time { color: #6b7280; margin-right: 6px; }
+    .log-info { color: #60a5fa; }
+    .log-success { color: #34d399; }
+    .log-warn { color: #fbbf24; }
+    .log-error { color: #f87171; }
+    .export-box {
+      display: flex;
+      gap: 10px;
+      margin-top: 14px;
+    }
+    .btn-export {
+      flex: 1;
+      padding: 10px 14px;
+      background: #1f2937;
+      border: 1px solid #374151;
+      color: #93c5fd;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .btn-export:hover {
+      background: #374151;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="topbar">
+      <div class="brand">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+        </svg>
+        <div>
+          <h1>YT Turbo Cluster Engine <span>v26.10.14.01 Enterprise</span></h1>
+        </div>
+      </div>
+      <div class="cluster-badge">
+        <div class="pulse"></div>
+        <span id="clusterStatusText">Pre-Warming Cluster...</span>
+      </div>
+    </div>
+
+    <div class="grid-main">
+      <!-- Left Column: Mission Control -->
+      <div class="panel">
+        <div class="panel-title">
+          <span>⚡ High-Speed Session Dispatcher</span>
+          <span style="font-size:12px;color:var(--muted)" id="spawnMetric">Avg Spawn: ~12ms</span>
+        </div>
+
+        <!-- Mode Tabs -->
+        <div class="mode-tabs">
+          <button type="button" class="tab-btn active" id="tabSingle">Single Video</button>
+          <button type="button" class="tab-btn" id="tabMulti">Multi-Video Campaign</button>
+        </div>
+
+        <!-- Mode 1: Single Video Form -->
+        <form id="singleForm">
+          <div class="form-group">
+            <label>YouTube Video Link</label>
+            <input type="url" id="videoUrl" placeholder="https://www.youtube.com/watch?v=..." required />
+          </div>
+
+          <div class="form-group">
+            <label>Total Views Target (Scale: 1 to 5,000)</label>
+            <input type="number" id="browserCount" min="1" max="5000" value="5" required />
+            <div class="presets">
+              <button type="button" class="preset-btn active" data-val="5">5 Browsers</button>
+              <button type="button" class="preset-btn" data-val="25">25 Browsers</button>
+              <button type="button" class="preset-btn" data-val="100">100 Browsers</button>
+              <button type="button" class="preset-btn" data-val="500">500 Browsers</button>
+              <button type="button" class="preset-btn" data-val="1000">1000 Browsers</button>
+            </div>
+          </div>
+
+          <div class="row-3">
+            <div class="form-group">
+              <label>Watch Time (Sec)</label>
+              <input type="number" id="watchDuration" min="5" max="7200" value="60" required />
+            </div>
+            <div class="form-group">
+              <label>Max Parallel Pool</label>
+              <input type="number" id="concurrency" min="1" max="250" value="48" required />
+            </div>
+            <div class="form-group">
+              <label>Execution Mode</label>
+              <select id="executionMode">
+                <option value="headless" selected>Background Turbo Pool (Fastest)</option>
+                <option value="visible">Visible Desktop Windows</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Enterprise Anti-Bot & Network Card -->
+          <div class="enterprise-card">
+            <div class="enterprise-header">
+              <span>🌐 Enterprise Proxy & Stealth Configuration</span>
+              <span style="font-size:11px;color:var(--green)">100% Anti-Detection</span>
+            </div>
+
+            <div class="form-group">
+              <label>Rotating Residential Proxy Gateway (Optional)</label>
+              <div class="input-with-btn">
+                <input type="text" id="proxyGateway" placeholder="http://customer-user:pass@gate.smartproxy.com:7000" />
+                <button type="button" class="btn-sub" id="btnTestProxy">⚡ Test Proxy</button>
+              </div>
+              <div id="proxyStatus" style="font-size:11px; margin-top:5px; display:none;"></div>
+            </div>
+
+            <div class="row-2">
+              <div class="form-group">
+                <label>Traffic Source Mode</label>
+                <select id="trafficSource">
+                  <option value="direct" selected>Direct YouTube Video Link</option>
+                  <option value="search">Organic YouTube Search (SEO Boost)</option>
+                  <option value="referrer">Social Referrers (Twitter, Reddit, Google)</option>
+                </select>
+              </div>
+              <div class="form-group" id="searchKeywordBox" style="display:none;">
+                <label>YouTube Search Query / Keyword</label>
+                <input type="text" id="searchKeyword" placeholder="e.g. My Video Title Tutorial" />
+              </div>
+            </div>
+
+            <div class="toggles">
+              <label class="toggle-card">
+                <input type="checkbox" id="jitterToggle" checked />
+                <div>
+                  <strong>Watch Time Jitter (±15s)</strong>
+                  <small>Randomizes session length to mimic real viewer retention curves</small>
+                </div>
+              </label>
+              <label class="toggle-card">
+                <input type="checkbox" id="humanToggle" checked />
+                <div>
+                  <strong>Human Micro-Interactions</strong>
+                  <small>Curved mouse paths, smooth comments scrolling & interactions</small>
+                </div>
+              </label>
+            </div>
+
+            <div class="toggles">
+              <label class="toggle-card">
+                <input type="checkbox" id="dripToggle" />
+                <div>
+                  <strong>Drip-Feed Pacing</strong>
+                  <small>Smooth view inflow (Prevents YouTube 301+ view freeze)</small>
+                </div>
+              </label>
+              <div id="dripIntervalBox" style="display:none;" class="form-group">
+                <label>Interval Between Spawns (Sec)</label>
+                <input type="number" id="dripInterval" min="1" max="60" value="3" />
+              </div>
+            </div>
+
+            <div class="form-group" style="margin-top:12px; margin-bottom:0;">
+              <label>Discord / Telegram Webhook Alerts (Optional)</label>
+              <div class="input-with-btn">
+                <input type="url" id="webhookUrl" placeholder="https://discord.com/api/webhooks/... or Telegram Bot URL" />
+                <button type="button" class="btn-sub" id="btnTestWebhook">🔔 Ping Test</button>
+              </div>
+              <div id="webhookStatus" style="font-size:11px; margin-top:5px; display:none;"></div>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button type="submit" class="btn btn-launch" id="launchBtn">🚀 Launch 5 Sessions Now</button>
+            <button type="button" class="btn btn-stop" id="stopBtn">🛑 Stop All</button>
+          </div>
+        </form>
+
+        <!-- Mode 2: Multi-Video Campaign Form -->
+        <form id="multiForm" style="display: none;">
+          <label>Campaign Videos List (URL | Views | Watch Sec)</label>
+          <div class="campaign-list" id="campaignRows">
+            <!-- Row 1 -->
+            <div class="campaign-row">
+              <input type="url" placeholder="https://www.youtube.com/watch?v=..." class="camp-url" required />
+              <input type="number" placeholder="Views" value="1000" min="1" max="5000" class="camp-count" title="Views Target" required />
+              <input type="number" placeholder="Sec" value="60" min="5" max="3600" class="camp-duration" title="Watch Time in Seconds" required />
+              <button type="button" class="btn-remove" onclick="removeCampRow(this)">✕</button>
+            </div>
+            <!-- Row 2 -->
+            <div class="campaign-row">
+              <input type="url" placeholder="https://www.youtube.com/watch?v=..." class="camp-url" required />
+              <input type="number" placeholder="Views" value="2500" min="1" max="5000" class="camp-count" title="Views Target" required />
+              <input type="number" placeholder="Sec" value="45" min="5" max="3600" class="camp-duration" title="Watch Time in Seconds" required />
+              <button type="button" class="btn-remove" onclick="removeCampRow(this)">✕</button>
+            </div>
+            <!-- Row 3 -->
+            <div class="campaign-row">
+              <input type="url" placeholder="https://www.youtube.com/watch?v=..." class="camp-url" required />
+              <input type="number" placeholder="Views" value="500" min="1" max="5000" class="camp-count" title="Views Target" required />
+              <input type="number" placeholder="Sec" value="90" min="5" max="3600" class="camp-duration" title="Watch Time in Seconds" required />
+              <button type="button" class="btn-remove" onclick="removeCampRow(this)">✕</button>
+            </div>
+          </div>
+
+          <button type="button" class="btn-add-row" id="btnAddRow">➕ Add Another Video Row</button>
+
+          <div class="row-3">
+            <div class="form-group">
+              <label>Max Parallel Pool</label>
+              <input type="number" id="multiConcurrency" min="1" max="250" value="48" required />
+            </div>
+            <div class="form-group" style="grid-column: span 2;">
+              <label>Execution Mode</label>
+              <select id="multiExecutionMode">
+                <option value="headless" selected>Background Turbo Pool (Fastest)</option>
+                <option value="visible">Visible Desktop Windows</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Enterprise settings for Multi-Video -->
+          <div class="enterprise-card">
+            <div class="enterprise-header">
+              <span>🌐 Campaign Proxy & Stealth Defaults</span>
+            </div>
+            <div class="form-group">
+              <label>Rotating Residential Proxy Gateway (Applied to all videos)</label>
+              <input type="text" id="multiProxyGateway" placeholder="http://customer-user:pass@gate.smartproxy.com:7000 (Optional)" />
+            </div>
+            <div class="row-2">
+              <div class="form-group">
+                <label>Default Traffic Source</label>
+                <select id="multiTrafficSource">
+                  <option value="direct">Direct YouTube Link</option>
+                  <option value="referrer">Social Referrers (Twitter, Reddit, Google)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Discord / Telegram Webhook</label>
+                <input type="url" id="multiWebhookUrl" placeholder="Webhook URL for Campaign Updates" />
+              </div>
+            </div>
+            <div class="toggles">
+              <label class="toggle-card">
+                <input type="checkbox" id="multiDripToggle" />
+                <div>
+                  <strong>Drip-Feed Pacing</strong>
+                  <small>Smooth view inflow (Prevents YouTube 301+ view freeze)</small>
+                </div>
+              </label>
+              <div id="multiDripIntervalBox" style="display:none;" class="form-group">
+                <label>Interval Between Spawns (Sec)</label>
+                <input type="number" id="multiDripInterval" min="1" max="60" value="3" />
+              </div>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button type="submit" class="btn btn-launch" id="multiLaunchBtn">🚀 Launch Multi-Video Campaign</button>
+            <button type="button" class="btn btn-stop" id="multiStopBtn">🛑 Stop All</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- Right Column: Real-Time Telemetry, Active Campaigns & Logs -->
+      <div class="panel">
+        <div class="panel-title">
+          <span>📊 Real-Time Telemetry (SSE Stream)</span>
+          <span style="font-size:12px;color:var(--green)">● 0ms Live Sync</span>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-box">
+            <div class="label">Active Browsers</div>
+            <div class="val green" id="statActive">0</div>
+          </div>
+          <div class="stat-box">
+            <div class="label">In Rolling Queue</div>
+            <div class="val amber" id="statQueued">0</div>
+          </div>
+          <div class="stat-box">
+            <div class="label">Completed (100% Target)</div>
+            <div class="val blue" id="statCompleted">0</div>
+          </div>
+          <div class="stat-box">
+            <div class="label">Avg Context Spawn</div>
+            <div class="val" id="statSpawnMs">0 ms</div>
+          </div>
+        </div>
+
+        <!-- Live Campaign Progress Tracker -->
+        <div id="campaignTrackerBox" style="display: none; margin-bottom: 18px;">
+          <div class="panel-title" style="margin-bottom: 10px;">
+            <span>🎯 Live Video Campaigns</span>
+            <span style="font-size: 11px; color: var(--muted);" id="campaignsCountText">0 Campaigns Active</span>
+          </div>
+          <div class="campaign-cards" id="campaignCardsContainer"></div>
+        </div>
+
+        <div class="meters">
+          <div class="meter-row">
+            <div class="meter-header">
+              <span>System CPU Load</span>
+              <span id="cpuText">0%</span>
+            </div>
+            <div class="bar-bg"><div class="bar-fill" id="cpuBar"></div></div>
+          </div>
+          <div class="meter-row">
+            <div class="meter-header">
+              <span>System Memory (RAM)</span>
+              <span id="ramText">0 / 32 GB</span>
+            </div>
+            <div class="bar-bg"><div class="bar-fill" id="ramBar" style="background:var(--green)"></div></div>
+          </div>
+        </div>
+
+        <div class="terminal" id="terminalBox">
+          <div class="log-line log-info">[SYSTEM] Connected to real-time telemetry stream.</div>
+        </div>
+
+        <!-- Report Download Actions -->
+        <div class="export-box">
+          <button type="button" class="btn-export" id="btnExportCsv">📥 Export Audit Report (CSV)</button>
+          <button type="button" class="btn-export" id="btnExportJson">📄 Export JSON</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Tab Switching
+    const tabSingle = document.getElementById('tabSingle');
+    const tabMulti = document.getElementById('tabMulti');
+    const singleForm = document.getElementById('singleForm');
+    const multiForm = document.getElementById('multiForm');
+
+    tabSingle.addEventListener('click', () => {
+      tabSingle.classList.add('active');
+      tabMulti.classList.remove('active');
+      singleForm.style.display = 'block';
+      multiForm.style.display = 'none';
+    });
+
+    tabMulti.addEventListener('click', () => {
+      tabMulti.classList.add('active');
+      tabSingle.classList.remove('active');
+      singleForm.style.display = 'none';
+      multiForm.style.display = 'block';
+    });
+
+    // Single Form Presets
+    const countInput = document.getElementById('browserCount');
+    const launchBtn = document.getElementById('launchBtn');
+    const presetBtns = document.querySelectorAll('.preset-btn');
+    const terminalBox = document.getElementById('terminalBox');
+
+    function updateButtonLabel() {
+      const val = countInput.value || 5;
+      launchBtn.textContent = `🚀 Launch ${val} Sessions Now`;
+      presetBtns.forEach(b => {
+        b.classList.toggle('active', b.dataset.val === String(val));
+      });
+    }
+
+    countInput.addEventListener('input', updateButtonLabel);
+    presetBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        countInput.value = btn.dataset.val;
+        updateButtonLabel();
+      });
+    });
+
+    // Traffic Source Toggle
+    const trafficSource = document.getElementById('trafficSource');
+    const searchKeywordBox = document.getElementById('searchKeywordBox');
+    trafficSource.addEventListener('change', () => {
+      searchKeywordBox.style.display = trafficSource.value === 'search' ? 'block' : 'none';
+    });
+
+    // Drip Feed Toggles
+    const dripToggle = document.getElementById('dripToggle');
+    const dripIntervalBox = document.getElementById('dripIntervalBox');
+    dripToggle.addEventListener('change', () => {
+      dripIntervalBox.style.display = dripToggle.checked ? 'block' : 'none';
+    });
+
+    const multiDripToggle = document.getElementById('multiDripToggle');
+    const multiDripIntervalBox = document.getElementById('multiDripIntervalBox');
+    multiDripToggle.addEventListener('change', () => {
+      multiDripIntervalBox.style.display = multiDripToggle.checked ? 'block' : 'none';
+    });
+
+
+    // Multi-Video Rows Management
+    const campaignRows = document.getElementById('campaignRows');
+    const btnAddRow = document.getElementById('btnAddRow');
+
+    function removeCampRow(btn) {
+      if (campaignRows.children.length > 1) {
+        btn.closest('.campaign-row').remove();
+      } else {
+        alert('Kam se kam ek video row honi chahiye!');
+      }
+    }
+
+    btnAddRow.addEventListener('click', () => {
+      const row = document.createElement('div');
+      row.className = 'campaign-row';
+      row.innerHTML = `
+        <input type="url" placeholder="https://www.youtube.com/watch?v=..." class="camp-url" required />
+        <input type="number" placeholder="Views" value="1000" min="1" max="5000" class="camp-count" title="Views Target" required />
+        <input type="number" placeholder="Sec" value="60" min="5" max="3600" class="camp-duration" title="Watch Time in Seconds" required />
+        <button type="button" class="btn-remove" onclick="removeCampRow(this)">✕</button>
+      `;
+      campaignRows.appendChild(row);
+    });
+
+    function appendLog(entry) {
+      const div = document.createElement('div');
+      div.className = `log-line log-${entry.level || 'info'}`;
+      div.innerHTML = `<span class="log-time">[${entry.time}]</span> ${entry.message}`;
+      terminalBox.prepend(div);
+      while (terminalBox.children.length > 60) {
+        terminalBox.removeChild(terminalBox.lastChild);
+      }
+    }
+
+    // Proxy Connectivity Tester
+    const btnTestProxy = document.getElementById('btnTestProxy');
+    const proxyStatus = document.getElementById('proxyStatus');
+    btnTestProxy.addEventListener('click', async () => {
+      const proxy = document.getElementById('proxyGateway').value.trim();
+      if (!proxy) {
+        proxyStatus.style.display = 'block';
+        proxyStatus.style.color = '#fbbf24';
+        proxyStatus.textContent = 'Pehle proxy gateway enter karein (e.g. http://user:pass@host:port)';
+        return;
+      }
+      proxyStatus.style.display = 'block';
+      proxyStatus.style.color = '#93c5fd';
+      proxyStatus.textContent = 'Testing connection via gateway...';
+
+      try {
+        const res = await fetch('/api/proxy/test', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ proxy })
+        });
+        const data = await res.json();
+        if (data.ok) {
+          proxyStatus.style.color = '#34d399';
+          proxyStatus.textContent = `✅ Proxy Online! Public IP: ${data.ip} (${data.latencyMs}ms latency)`;
+        } else {
+          proxyStatus.style.color = '#f87171';
+          proxyStatus.textContent = `❌ Proxy Failed: ${data.error}`;
+        }
+      } catch (err) {
+        proxyStatus.style.color = '#f87171';
+        proxyStatus.textContent = `❌ Error: ${err.message}`;
+      }
+    });
+
+    // Webhook Tester
+    const btnTestWebhook = document.getElementById('btnTestWebhook');
+    const webhookStatus = document.getElementById('webhookStatus');
+    btnTestWebhook.addEventListener('click', async () => {
+      const webhookUrl = document.getElementById('webhookUrl').value.trim();
+      if (!webhookUrl) {
+        webhookStatus.style.display = 'block';
+        webhookStatus.style.color = '#fbbf24';
+        webhookStatus.textContent = 'Pehle Webhook URL enter karein!';
+        return;
+      }
+      webhookStatus.style.display = 'block';
+      webhookStatus.style.color = '#93c5fd';
+      webhookStatus.textContent = 'Sending test ping...';
+
+      try {
+        const res = await fetch('/api/webhook/test', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ webhookUrl })
+        });
+        const data = await res.json();
+        if (data.ok) {
+          webhookStatus.style.color = '#34d399';
+          webhookStatus.textContent = '✅ Alert sent successfully! Check your Discord / Telegram channel.';
+        } else {
+          webhookStatus.style.color = '#f87171';
+          webhookStatus.textContent = `❌ Webhook Failed: ${data.error}`;
+        }
+      } catch (err) {
+        webhookStatus.style.color = '#f87171';
+        webhookStatus.textContent = `❌ Error: ${err.message}`;
+      }
+    });
+
+    // Report Downloads
+    document.getElementById('btnExportCsv').addEventListener('click', () => {
+      window.location.href = '/api/export/csv';
+    });
+    document.getElementById('btnExportJson').addEventListener('click', () => {
+      window.open('/api/export/json', '_blank');
+    });
+
+    // SSE Telemetry Listener
+    const campaignTrackerBox = document.getElementById('campaignTrackerBox');
+    const campaignCardsContainer = document.getElementById('campaignCardsContainer');
+    const campaignsCountText = document.getElementById('campaignsCountText');
+
+    const evtSource = new EventSource('/api/telemetry');
+    evtSource.onmessage = (event) => {
+      const data = JSON.parse(event.data);
+      if (data.stats) {
+        const s = data.stats;
+        document.getElementById('statActive').textContent = s.active;
+        document.getElementById('statQueued').textContent = s.queued;
+        document.getElementById('statCompleted').textContent =
+          s.autoRecovered > 0 ? `${s.completed} (🎯 +${s.autoRecovered} recovered)` : s.completed;
+        document.getElementById('statSpawnMs').textContent = `${s.avgSpawnMs || 0} ms`;
+        document.getElementById('spawnMetric').textContent = `Avg Spawn: ${s.avgSpawnMs || 12}ms`;
+
+        document.getElementById('clusterStatusText').textContent =
+          `${s.clusterEnginesReady} Master Cluster Engines Online (0ms Cold Start)`;
+
+        document.getElementById('cpuText').textContent = `${s.cpuUsagePercent}%`;
+        document.getElementById('cpuBar').style.width = `${s.cpuUsagePercent}%`;
+
+        const ramPct = s.ramTotalGB ? Math.round((s.ramUsedGB / s.ramTotalGB) * 100) : 0;
+        document.getElementById('ramText').textContent = `${s.ramUsedGB} / ${s.ramTotalGB} GB (${s.ramFreeGB} GB Free)`;
+        document.getElementById('ramBar').style.width = `${ramPct}%`;
+
+        // Render Multi-Video Campaign Live Cards
+        if (s.campaigns && s.campaigns.length > 0) {
+          campaignTrackerBox.style.display = 'block';
+          campaignsCountText.textContent = `${s.campaigns.length} Active Video Campaign(s)`;
+          campaignCardsContainer.innerHTML = '';
+
+          s.campaigns.forEach((c) => {
+            const card = document.createElement('div');
+            card.className = 'camp-card';
+            card.innerHTML = `
+              <div class="camp-card-header">
+                <span class="camp-card-title" title="${c.url}">${c.title || c.url}</span>
+                <span style="color:var(--blue); font-family:'JetBrains Mono'">${c.progressPct}%</span>
+              </div>
+              <div class="bar-bg" style="height:5px;">
+                <div class="bar-fill" style="width:${c.progressPct}%; background:linear-gradient(90deg, #3b82f6, #10b981);"></div>
+              </div>
+              <div class="camp-card-meta">
+                <span>Completed: <b>${c.completed}</b> / ${c.target}</span>
+                <span>Active: <b style="color:var(--green)">${c.active}</b></span>
+                <span>Duration: <b>${c.watchSeconds}s</b></span>
+              </div>
+            `;
+            campaignCardsContainer.appendChild(card);
+          });
+        }
+      }
+      if (data.logs) {
+        terminalBox.innerHTML = '';
+        data.logs.slice().reverse().forEach(appendLog);
+      }
+      if (data.newLog) {
+        appendLog(data.newLog);
+      }
+    };
+
+    // Single Form Submit
+    singleForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const url = document.getElementById('videoUrl').value.trim();
+      const count = parseInt(countInput.value, 10);
+      const duration = parseInt(document.getElementById('watchDuration').value, 10);
+      const concurrency = parseInt(document.getElementById('concurrency').value, 10);
+      const headless = document.getElementById('executionMode').value === 'headless';
+      const proxy = document.getElementById('proxyGateway').value.trim() || null;
+      const trafficSrc = document.getElementById('trafficSource').value;
+      const searchKwd = document.getElementById('searchKeyword').value.trim();
+      const jitter = document.getElementById('jitterToggle').checked;
+      const humanEmulation = document.getElementById('humanToggle').checked;
+      const dripFeed = document.getElementById('dripToggle').checked;
+      const dripInterval = parseInt(document.getElementById('dripInterval').value, 10) || 3;
+      const webhookUrl = document.getElementById('webhookUrl').value.trim() || null;
+
+      launchBtn.disabled = true;
+      try {
+        await fetch('/api/start', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            url,
+            count,
+            duration,
+            concurrency,
+            headless,
+            turboMode: true,
+            proxy,
+            trafficSource: trafficSrc,
+            searchKeyword: searchKwd,
+            jitter,
+            humanEmulation,
+            dripFeed,
+            dripInterval,
+            webhookUrl
+          })
+        });
+      } catch (err) {
+        appendLog({ time: new Date().toLocaleTimeString(), message: 'Server error: ' + err.message, level: 'error' });
+      } finally {
+        launchBtn.disabled = false;
+      }
+    });
+
+    // Multi-Video Campaign Form Submit
+    multiForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const rows = document.querySelectorAll('#campaignRows .campaign-row');
+      const videos = [];
+
+      rows.forEach((r, idx) => {
+        const url = r.querySelector('.camp-url').value.trim();
+        const count = parseInt(r.querySelector('.camp-count').value, 10) || 5;
+        const duration = parseInt(r.querySelector('.camp-duration').value, 10) || 60;
+        if (url) {
+          videos.push({ url, count, duration, title: `Video #${idx + 1}` });
+        }
+      });
+
+      if (videos.length === 0) {
+        alert('Kripya kam se kam ek valid video link enter karein!');
+        return;
+      }
+
+      const concurrency = parseInt(document.getElementById('multiConcurrency').value, 10);
+      const headless = document.getElementById('multiExecutionMode').value === 'headless';
+      const proxy = document.getElementById('multiProxyGateway').value.trim() || null;
+      const trafficSrc = document.getElementById('multiTrafficSource').value;
+      const webhookUrl = document.getElementById('multiWebhookUrl').value.trim() || null;
+      const multiLaunchBtn = document.getElementById('multiLaunchBtn');
+
+      multiLaunchBtn.disabled = true;
+      try {
+        await fetch('/api/campaign/start', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            videos,
+            concurrency,
+            headless,
+            turboMode: true,
+            proxy,
+            trafficSource: trafficSrc,
+            webhookUrl,
+            jitter: true,
+            humanEmulation: true,
+            dripFeed: multiDripToggle.checked,
+            dripInterval: parseInt(document.getElementById('multiDripInterval').value, 10) || 3
+          })
+        });
+      } catch (err) {
+        appendLog({ time: new Date().toLocaleTimeString(), message: 'Campaign launch error: ' + err.message, level: 'error' });
+      } finally {
+        multiLaunchBtn.disabled = false;
+      }
+    });
+
+    // Stop Buttons
+    document.getElementById('stopBtn').addEventListener('click', async () => {
+      await fetch('/api/stop', { method: 'POST' });
+    });
+    document.getElementById('multiStopBtn').addEventListener('click', async () => {
+      await fetch('/api/stop', { method: 'POST' });
+    });
+  </script>
+</body>
+</html>
