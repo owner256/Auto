@@ -1,0 +1,53 @@
+{
+  "id": "project_cpu",
+  "title": "CPU Architecture: The Silicon Heart",
+  "ratio": "16:9",
+  "voice": "hinglish_male",
+  "theme": {
+    "background": "#080e18"
+  },
+  "scenes": [
+    {
+      "type": "title_intro",
+      "title": "CPU Architecture",
+      "subtitle": "The Silicon Heart of Modern Computing",
+      "prompt": "How do billions of transistors execute code every second?",
+      "tag": "Central Processing Unit",
+      "voice": "क्या आपने कभी सोचा है कि जब आप कंप्यूटर में एक क्लिक करते हैं, तो अंदर क्या होता है? अरबों माइक्रोस्कोपिक स्विचेस मिलकर काम करते हैं प्रोसेसर यानी CPU के अंदर!"
+    },
+    {
+      "type": "prob_distribution",
+      "header": "Instruction Cycle Breakdown",
+      "tokens": ["Fetch", "Decode", "Execute"],
+      "items": [
+        {"word": "ALU Math", "prob": 0.74},
+        {"word": "Memory Access", "prob": 0.18},
+        {"word": "Branch Jump", "prob": 0.08}
+      ],
+      "sampled": "ALU Math",
+      "voice": "CPU की मुख्य ताकत है Fetch, Decode और Execute साइकिल। Control Unit निर्देश लाता है, उसे समझता है और ALU Core के अंदर बिजली की रफ़्तार से कैलकुलेशन पूरा करता है।"
+    },
+    {
+      "type": "vector_embeddings",
+      "header": "Memory Hierarchy: Latency vs Speed",
+      "context": "Ultra-Fast On-Die Storage",
+      "main_word": "Registers (0.5ns)",
+      "attractor": "RAM (50ns)",
+      "voice": "प्रोसेसर के अंदर Registers और L1/L2 Cache वो सुपरफास्ट मेमोरी हैं जो डेटा को नैनोसेकंड्स में उपलब्ध कराती हैं, जिससे CPU को सुस्त RAM का इंतज़ार नहीं करना पड़ता।"
+    },
+    {
+      "type": "feedback_loop",
+      "header": "Continuous Clock Cycles (GHz)",
+      "step": "Fetch -> Decode -> Execute -> Writeback",
+      "scale": "3.5+ Billion Clock Cycles / Second",
+      "voice": "हर सेकंड साढ़े तीन अरब बार यह साइकिल बिना रुके चलती है। Cores और Threads मिलकर भारी टास्क्स को पैरेलल में बाँटकर सॉल्व करते हैं।"
+    },
+    {
+      "type": "quote_conclusion",
+      "title": "The Master Engine of Technology.",
+      "quote": "Computers do not think; CPUs just calculate faster than light.",
+      "tag": "ZCLE Studio Production",
+      "voice": "और इस तरह साधारण सी सिलिकॉन और बिजली मिलकर बनती है आधुनिक डिजिटल दुनिया का सबसे स्मार्ट दिमाग—CPU!"
+    }
+  ]
+}

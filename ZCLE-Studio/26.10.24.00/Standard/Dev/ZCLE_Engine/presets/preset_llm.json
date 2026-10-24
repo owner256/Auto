@@ -1,0 +1,55 @@
+{
+  "id": "project_llm",
+  "title": "Large Language Models Explained",
+  "ratio": "16:9",
+  "voice": "hinglish_male",
+  "theme": {
+    "background": "#0e1117"
+  },
+  "scenes": [
+    {
+      "type": "title_intro",
+      "title": "Large Language Models",
+      "subtitle": "How do AI Chatbots actually work?",
+      "prompt": "Can machines really think?",
+      "tag": "Mathematical Illusion",
+      "voice": "क्या आपने कभी सोचा है कि ChatGPT जैसे AI मॉडल्स वास्तव में काम कैसे करते हैं? क्या ये सच में इंसानों की तरह सोचते हैं, या इसके पीछे कुछ और है?"
+    },
+    {
+      "type": "prob_distribution",
+      "header": "Next-Token Probability Engine",
+      "tokens": ["The", "sky", "is"],
+      "items": [
+        {"word": "blue", "prob": 0.82},
+        {"word": "dark", "prob": 0.11},
+        {"word": "clear", "prob": 0.05},
+        {"word": "falling", "prob": 0.02}
+      ],
+      "sampled": "blue",
+      "voice": "असल में, एक Large Language Model एक विशाल mathematical function है, जिसका सिर्फ एक ही काम होता है—किसी भी अधूरे वाक्य का अगला सबसे संभावित शब्द predict करना। जैसे इनपुट 'The sky is...' देने पर मॉडल हर संभव शब्द को प्रोबेबिलिटी देता है, जैसे Blue 82%।"
+    },
+    {
+      "type": "vector_embeddings",
+      "header": "Vectors & Attention Mechanism",
+      "context": "Context: Sitting by the river bank",
+      "main_word": "Bank",
+      "attractor": "River",
+      "voice": "लेकिन कंप्यूटर शब्दों को नहीं, नंबर्स को समझता है। इसलिए हर शब्द एक vector होता है। और यहाँ काम करता है Attention Mechanism—जब Bank शब्द River के पास आता है, तो मॉडल समझ जाता है कि यहाँ बैंक का मतलब पैसों का बैंक नहीं, बल्कि नदी का किनारा है!"
+    },
+    {
+      "type": "feedback_loop",
+      "header": "The Auto-Regressive Feedback Loop",
+      "step": "Input -> Predict -> Append -> Repeat",
+      "scale": "175,000,000,000+ Parameters",
+      "voice": "मॉडल चुने गए शब्द को वापस इनपुट में जोड़ता है और यही प्रक्रिया सेकंड में दर्जनों बार दोहराता है। अरबों parameters के इस खेल से ही ऐसा लगता है कि मशीन बातें कर रही है।"
+    },
+    {
+      "type": "quote_conclusion",
+      "title": "Not Magic. Pure Mathematics.",
+      "quote": "Behind every word of AI lies the beauty of geometry.",
+      "tag": "Manim Studio Production",
+      "voice": "तो अगली बार जब आप AI से चैट करें, याद रखिए—यह कोई जादू नहीं, बल्कि शुद्ध गणित और प्रोबेबिलिटी का कमाल है!"
+    }
+  ]
+}
+

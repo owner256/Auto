@@ -1,0 +1,47 @@
+{
+  "id": "project_quantum",
+  "title": "Quantum Computing in 60 Seconds",
+  "ratio": "16:9",
+  "voice": "hinglish_male",
+  "theme": {
+    "background": "#0b101b"
+  },
+  "scenes": [
+    {
+      "type": "title_intro",
+      "title": "Quantum Computing",
+      "subtitle": "Beyond Classical Bits",
+      "prompt": "Can a bit be 0 and 1 simultaneously?",
+      "tag": "Superposition Principle",
+      "voice": "क्या आप जानते हैं कि क्वांटम कंप्यूटर सामान्य कंप्यूटर से करोड़ों गुना तेज़ कैसे हो सकते हैं? इसका राज़ छिपा है एक रहस्यमयी सिद्धांत में—Superposition!"
+    },
+    {
+      "type": "prob_distribution",
+      "header": "Qubit Probability State",
+      "tokens": ["Qubit", "State", "|Psi>"],
+      "items": [
+        {"word": "State 0", "prob": 0.50},
+        {"word": "State 1", "prob": 0.50},
+        {"word": "Collapsed", "prob": 0.00}
+      ],
+      "sampled": "Superposition",
+      "voice": "सामान्य कंप्यूटर के बिट्स या तो 0 होते हैं या 1। लेकिन एक Qubit जब तक मापा न जाए, वह एक साथ 0 और 1 दोनों की प्रोबेबिलिटी में मौजूद रहता है।"
+    },
+    {
+      "type": "vector_embeddings",
+      "header": "Bloch Sphere & Entanglement",
+      "context": "Entangled Qubit Pairs",
+      "main_word": "Qubit A",
+      "attractor": "Qubit B",
+      "voice": "और जब दो Qubits आपस में Entangle हो जाते हैं, तो एक की स्थिति बदलते ही दूसरे की स्थिति तुरंत बदल जाती है, चाहे वे ब्रह्मांड के किसी भी कोने में हों!"
+    },
+    {
+      "type": "quote_conclusion",
+      "title": "The Quantum Era is Here",
+      "quote": "Nature isn't classical, dammit, and if you want to make a simulation of nature, you'd better make it quantum mechanical.",
+      "tag": "Manim Studio Production",
+      "voice": "क्वांटम कंप्यूटिंग भविष्य की समस्याओं को चुटकियों में सुलझाएगा। यह विज्ञान की वो क्रांति है जो हमारी दुनिया को हमेशा के लिए बदलने वाली है!"
+    }
+  ]
+}
+

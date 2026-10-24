@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "ZCLEStudioDirectorSchema",
+  "type": "object",
+  "required": ["topic", "scenes"],
+  "properties": {
+    "topic": {
+      "type": "string",
+      "description": "Title of the video topic"
+    },
+    "category": {
+      "type": "string",
+      "enum": ["astrophysics", "computing", "neural_ai", "math_analysis", "general"],
+      "description": "Scientific domain of the lesson"
+    },
+    "voice": {
+      "type": "string",
+      "default": "en-US-ChristopherNeural",
+      "description": "Edge-TTS voice identifier"
+    },
+    "scenes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["scene_id", "cue_phrase", "visual_primitive", "action"],
+        "properties": {
+          "scene_id": {
+            "type": "integer"
+          },
+          "cue_phrase": {
+            "type": "string",
+            "description": "The exact spoken text anchor where this visual cue initiates"
+          },
+          "visual_primitive": {
+            "type": "string",
+            "description": "Primitive component name from the ZCLE Visual Library"
+          },
+          "action": {
+            "type": "string",
+            "description": "Animation function or state transformation to trigger"
+          },
+          "parameters": {
+            "type": "object",
+            "description": "Mathematical, physical, geometric, or aesthetic parameters"
+          }
+        }
+      }
+    }
+  }
+}
+

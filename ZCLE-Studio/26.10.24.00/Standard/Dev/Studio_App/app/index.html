@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>ZCLE Studio — Cinematic Learning Engine Dashboard</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body class="mode-studio">
+  <div class="studio-app">
+    <!-- 1. Top Studio Workspace Navigation Bar -->
+    <header class="studio-header">
+      <div class="studio-brand">
+        <span class="studio-logo-icon">🎬</span>
+        <div class="studio-title-box">
+          <div class="brand-row">
+            <span class="studio-title">ZCLE STUDIO</span>
+            <span class="studio-badge">v26.10.24.00</span>
+          </div>
+          <span class="studio-subtext">Cinematic Learning Engine • 3Blue1Brown Pedagogy</span>
+        </div>
+      </div>
+
+      <!-- Center View Mode Toggle -->
+      <div class="studio-view-toggle">
+        <button id="btn-mode-studio" class="toggle-tab active" title="Side-by-side Studio Editor">
+          <span class="tab-icon">🛠️</span> Studio Editor
+        </button>
+        <button id="btn-mode-cinema" class="toggle-tab" title="Full Cinema Player View">
+          <span class="tab-icon">📽️</span> Cinema Player
+        </button>
+      </div>
+
+      <!-- Right Header Controls -->
+      <div class="studio-header-actions">
+        <!-- Lesson Preset Selector -->
+        <select id="course-select" class="studio-select" title="Active Lesson">
+          <option value="cpu">💻 What is CPU? (13 Scenes • 05:07)</option>
+          <option value="gpu" disabled>⚡ GPU Architecture (Coming Soon)</option>
+          <option value="memory" disabled>🧠 Memory Hierarchy (Coming Soon)</option>
+        </select>
+
+        <!-- Voice Selector -->
+        <select id="voice-select" class="studio-select" title="Select Voice Engine">
+          <option value="mp3">🎙️ Studio Master Audio</option>
+        </select>
+
+        <!-- Export Video Button -->
+        <button id="download-mp4-btn" class="studio-btn btn-export" title="Export Lossless Video">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          <span id="download-btn-text">Export Video</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- 2. Main Studio Workspace Layout -->
+    <div class="studio-workspace">
+      <!-- Left Panel: Scene Timeline Navigator & Inspector -->
+      <aside id="studio-sidebar" class="studio-sidebar">
+        <div class="sidebar-header">
+          <div class="sidebar-title-row">
+            <span class="sidebar-heading">📋 SCENE TIMELINE</span>
+            <span id="scene-counter" class="pill-count">13 SCENES</span>
+          </div>
+          <p class="sidebar-subtitle">Click any scene to jump & inspect parameters</p>
+        </div>
+
+        <!-- Scrollable Scene Card List -->
+        <div id="scenes-list" class="scenes-list">
+          <!-- Dynamically populated from course data -->
+        </div>
+
+        <!-- Active Scene Inspector / Script Editor -->
+        <div id="scene-editor-panel" class="scene-editor-panel">
+          <div class="editor-header">
+            <span class="editor-title">✏️ SCENE INSPECTOR</span>
+            <span id="active-scene-mode-badge" class="mode-badge">hero</span>
+          </div>
+
+          <div class="form-group">
+            <label>Scene Title</label>
+            <input type="text" id="edit-scene-title" class="studio-input" />
+          </div>
+
+          <div class="form-group">
+            <label>Headline Subtitle</label>
+            <input type="text" id="edit-scene-headline" class="studio-input" />
+          </div>
+
+          <div class="form-group">
+            <label>Narration Script (Hinglish)</label>
+            <textarea id="edit-scene-narration" class="studio-textarea" rows="3"></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Visual Mode & Labels</label>
+            <div id="edit-scene-cues" class="cue-tags"></div>
+          </div>
+
+          <button id="btn-apply-scene" class="btn-apply-changes">
+            ✓ Update Scene Live
+          </button>
+        </div>
+      </aside>
+
+      <!-- Center / Right Panel: Live Studio Viewport -->
+      <main class="studio-viewport-container">
+        <div id="video-stage" class="video-stage">
+          <!-- 3D Perspective WebGL Canvas -->
+          <canvas id="webgl-canvas"></canvas>
+
+          <!-- Cinematic Vignette & Film Overlays -->
+          <div class="cinematic-vignette"></div>
+          <div class="letterbox bar-top"></div>
+          <div class="letterbox bar-bottom"></div>
+
+          <!-- Top Viewport HUD -->
+          <header class="hud-top">
+            <div class="brand-pill">
+              <span class="pulse-dot"></span>
+              <span class="brand-text">ZCLE STUDIO LIVE</span>
+              <span id="scene-badge" class="scene-badge">SCENE 01</span>
+            </div>
+
+            <div class="viewport-meta">
+              <span class="meta-tag">1080P 60FPS</span>
+              <span class="meta-tag">3D INTERACTIVE ORBIT</span>
+            </div>
+          </header>
+
+          <!-- Center Scene Title & Subtitles -->
+          <div class="hud-center-info">
+            <h1 id="scene-title" class="scene-title">What is CPU?</h1>
+            <p id="scene-subtitle" class="scene-caption">Loading lesson...</p>
+          </div>
+
+          <!-- Bottom Playback & Timeline Controls -->
+          <footer class="hud-bottom">
+            <div class="timeline-wrapper">
+              <input type="range" id="timeline-scrubber" min="0" max="100" step="0.1" value="0" />
+              <div id="timeline-progress" class="timeline-progress"></div>
+            </div>
+
+            <div class="controls-row">
+              <div class="left-controls">
+                <button id="play-pause-btn" class="control-btn primary-play" aria-label="Play or Pause">
+                  <span id="play-icon">▶</span>
+                </button>
+                <button id="prev-scene-btn" class="control-btn" title="Previous Scene">⏮</button>
+                <button id="next-scene-btn" class="control-btn" title="Next Scene">⏭</button>
+                <span id="time-display" class="time-display">00:00 / 05:07</span>
+              </div>
+
+              <div id="scene-pills" class="scene-pills"></div>
+
+              <div class="right-controls">
+                <button id="mute-btn" class="control-btn" title="Mute / Unmute">🔊</button>
+                <button id="fullscreen-btn" class="control-btn" title="Fullscreen">⛶</button>
+              </div>
+            </div>
+          </footer>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Master Audio Track for Studio Narration -->
+  <audio id="narration-audio" src="../assets/audio/cpu-narration-preview.mp3" preload="auto" crossorigin="anonymous"></audio>
+
+  <!-- Script Modules -->
+  <script src="course-data.js"></script>
+  <script src="webgl.js"></script>
+  <script src="scenes.js"></script>
+  <script src="player.js"></script>
+</body>
+</html>

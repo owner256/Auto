@@ -1,0 +1,773 @@
+window.ZCLE_COURSE = {
+  "schemaVersion": "1.0.0",
+  "courseId": "ztle-hardware-cpu",
+  "lessonId": "zcle-cpu-pilot-01",
+  "title": "What is CPU?",
+  "language": "hi-Latn",
+  "sourceOfTruth": {
+    "repository": "ALONE-616/ZTLE",
+    "ref": "beta",
+    "paths": [
+      "Hardware/courses/cpu/COURSE_MAP.md",
+      "Hardware/courses/cpu/part-01-fundamentals.md",
+      "Hardware/courses/cpu/part-02-working-and-use.md"
+    ]
+  },
+  "estimatedAudience": "Beginner IT learners",
+  "status": "prototype-not-published",
+  "width": 1920,
+  "height": 1080,
+  "durationMs": 307425,
+  "audio": {
+    "src": "../assets/audio/cpu-narration-preview.mp3",
+    "format": "audio/mpeg",
+    "role": "master-clock",
+    "voiceQuality": "robotic-placeholder",
+    "note": "Replace with professionally recorded Hinglish narration before publication."
+  },
+  "captions": {
+    "source": "scene.narration.text",
+    "granularity": "scene",
+    "status": "prototype"
+  },
+  "scenes": [
+    {
+      "id": "scene-01",
+      "order": 1,
+      "part": "01",
+      "title": "What is CPU?",
+      "mode": "2.5D",
+      "visualTemplate": "hero",
+      "narration": {
+        "text": "Aaj hum CPU ko samjhenge: ye kya hai, instructions kaise process karta hai, aur computer ki performance mein iska role kya hota hai. Ek simple example se shuru karte hain: jab aap browser open karte hain, background mein CPU program instructions execute karta hai.",
+        "startMs": 700,
+        "endMs": 22564,
+        "voiceType": "offline-espeak-placeholder"
+      },
+      "startMs": 0,
+      "endMs": 23564,
+      "durationMs": 23564,
+      "headline": "Inside the computer",
+      "kicker": "CENTRAL PROCESSING UNIT",
+      "labels": [
+        "Execute instructions",
+        "Run applications",
+        "Control tasks"
+      ],
+      "accessibility": {
+        "visualDescription": "Stylized CPU package with animated concentric circuitry."
+      },
+      "cues": [
+        {
+          "id": "enter",
+          "atMs": 0,
+          "action": "reveal",
+          "target": "headline"
+        },
+        {
+          "id": "cue-01",
+          "atMs": 5891,
+          "action": "highlight",
+          "target": "Execute instructions"
+        },
+        {
+          "id": "cue-02",
+          "atMs": 12725,
+          "action": "highlight",
+          "target": "Run applications"
+        },
+        {
+          "id": "cue-03",
+          "atMs": 19558,
+          "action": "highlight",
+          "target": "Control tasks"
+        }
+      ]
+    },
+    {
+      "id": "scene-02",
+      "order": 2,
+      "part": "01",
+      "title": "CPU ka full form",
+      "mode": "2D",
+      "visualTemplate": "definition",
+      "narration": {
+        "text": "CPU ka full form hai Central Processing Unit. Ye computer ka general purpose processing component hai. Operating system, applications aur calculations ke bahut se instructions CPU par execute hote hain. Lekin CPU akela poora computer nahi hai.",
+        "startMs": 24264,
+        "endMs": 44346,
+        "voiceType": "offline-espeak-placeholder"
+      },
+      "startMs": 23564,
+      "endMs": 45346,
+      "durationMs": 21782,
+      "headline": "Central Processing Unit",
+      "kicker": "CPU = GENERAL-PURPOSE PROCESSOR",
+      "labels": [
+        "Central",
+        "Processing",
+        "Unit"
+      ],
+      "accessibility": {
+        "visualDescription": "Animated three-part CPU acronym and explanatory cards."
+      },
+      "cues": [
+        {
+          "id": "enter",
+          "atMs": 0,
+          "action": "reveal",
+          "target": "headline"
+        },
+        {
+          "id": "cue-01",
+          "atMs": 5446,
+          "action": "highlight",
+          "target": "Central"
+        },
+        {
+          "id": "cue-02",
+          "atMs": 11762,
+          "action": "highlight",
+          "target": "Processing"
+        },
+        {
+          "id": "cue-03",
+          "atMs": 18079,
+          "action": "highlight",
+          "target": "Unit"
+        }
+      ]
+    },
+    {
+      "id": "scene-03",
+      "order": 3,
+      "part": "01",
+      "title": "CPU akela nahi kaam karta",
+      "mode": "2D",
+      "visualTemplate": "ecosystem",
+      "narration": {
+        "text": "CPU ko computer ka brain kehna popular shortcut hai. Technically, computing mein RAM, storage, input output aur software sab milkar kaam karte hain. CPU instructions execute karta hai, jabki baaki components data aur services available karvate hain.",
+        "startMs": 46046,
+        "endMs": 66816,
+        "voiceType": "offline-espeak-placeholder"
+      },
+      "startMs": 45346,
+      "endMs": 67816,
+      "durationMs": 22470,
+      "headline": "One component. One system.",
+      "kicker": "SYSTEM VIEW",
+      "labels": [
+        "Applications",
+        "CPU",
+        "RAM",
+        "Storage"
+      ],
+      "accessibility": {
+        "visualDescription": "CPU at center connected to applications memory and storage."
+      },
+      "cues": [
+        {
+          "id": "enter",
+          "atMs": 0,
+          "action": "reveal",
+          "target": "headline"
+        },
+        {
+          "id": "cue-01",
+          "atMs": 5618,
+          "action": "highlight",
+          "target": "Applications"
+        },
+        {
+          "id": "cue-02",
+          "atMs": 9962,
+          "action": "highlight",
+          "target": "CPU"
+        },
+        {
+          "id": "cue-03",
+          "atMs": 14306,
+          "action": "highlight",
+          "target": "RAM"
+        },
+        {
+          "id": "cue-04",
+          "atMs": 18650,
+          "action": "highlight",
+          "target": "Storage"
+        }
+      ]
+    },
+    {
+      "id": "scene-04",
+      "order": 4,
+      "part": "01",
+      "title": "Fetch Decode Execute",
+      "mode": "2D",
+      "visualTemplate": "fde",
+      "narration": {
+        "text": "CPU ki basic working samajhne ke liye fetch, decode aur execute model useful hai. Fetch mein instruction li jaati hai. Decode mein operation samjha jaata hai. Execute mein required calculation ya action perform hota hai. Real processors mein pipeline aur overlap bhi hote hain.",
+        "startMs": 68516,
+        "endMs": 90997,
+        "voiceType": "offline-espeak-placeholder"
+      },
+      "startMs": 67816,
+      "endMs": 91998,
+      "durationMs": 24182,
+      "headline": "Fetch → Decode → Execute",
+      "kicker": "SIMPLIFIED INSTRUCTION CYCLE",
+      "labels": [
+        "01 Fetch",
+        "02 Decode",
+        "03 Execute"
+      ],
+      "accessibility": {
+        "visualDescription": "Instruction cards travel across three animated processing phases."
+      },
+      "cues": [
+        {
+          "id": "enter",
+          "atMs": 0,
+          "action": "reveal",
+          "target": "headline"
+        },
+        {
+          "id": "cue-01",
+          "atMs": 6046,
+          "action": "highlight",
+          "target": "01 Fetch"
+        },
+        {
+          "id": "cue-02",
+          "atMs": 13058,
+          "action": "highlight",
+          "target": "02 Decode"
+        },
+        {
+          "id": "cue-03",
+          "atMs": 20071,
+          "action": "highlight",
+          "target": "03 Execute"
+        }
+      ]
+    },
+    {
+      "id": "scene-05",
+      "order": 5,
+      "part": "01",
+      "title": "Cores aur threads",
+      "mode": "2D",
+      "visualTemplate": "cores",
+      "narration": {
+        "text": "Core ek independent execution capability wala processing unit hai. Suitable workloads mein multiple cores parallel kaam kar sakte hain. Hardware threads ek core ke resources share kar sakte hain. Isliye do threads ko do complete physical cores ke barabar nahi samajhna chahiye.",
+        "startMs": 92698,
+        "endMs": 113898,
+        "voiceType": "offline-espeak-placeholder"
+      },
+      "startMs": 91998,
+      "endMs": 114898,
+      "durationMs": 22900,
+      "headline": "Cores ≠ Threads",
+      "kicker": "PARALLEL WORKLOAD MODEL",
+      "labels": [
+        "Physical cores",
+        "Hardware threads",
+        "Shared resources"
+      ],
+      "accessibility": {
+        "visualDescription": "Animation comparing four physical cores with logical task lanes."
+      },
+      "cues": [
+        {
+          "id": "enter",
+          "atMs": 0,
+          "action": "reveal",
+          "target": "headline"
+        },
+        {
+          "id": "cue-01",
+          "atMs": 5725,
+          "action": "highlight",
+          "target": "Physical cores"
+        },
+        {
+          "id": "cue-02",
+          "atMs": 12366,
+          "action": "highlight",
+          "target": "Hardware threads"
+        },
+        {
+          "id": "cue-03",
+          "atMs": 19007,
+          "action": "highlight",
+          "target": "Shared resources"
+        }
+      ]
+    },
+    {
+      "id": "scene-06",
+      "order": 6,
+      "part": "01",
+      "title": "Clock speed ka sach",
+      "mode": "2D",
+      "visualTemplate": "clock",
+      "narration": {
+        "text": "CPU clock frequency cycles per second dikhati hai. Ek gigahertz ka matlab roughly ek billion clock cycles per second hai. Lekin higher gigahertz se har application mein better performance guaranteed nahi hoti. Architecture, cache, workload aur thermal limits bhi matter karte hain.",
+        "startMs": 115598,
+        "endMs": 137041,
+        "voiceType": "offline-espeak-placeholder"
+      },
+      "startMs": 114898,
+      "endMs": 138041,
+      "durationMs": 23143,
+      "headline": "GHz is not the whole story",
+      "kicker": "PERFORMANCE BASICS",
+      "labels": [
+        "Clock cycles",
+        "Architecture",
+        "Thermal limits"
+      ],
+      "accessibility": {
+        "visualDescription": "Animated waveform and clock pulses with GHz caveat."
+      },
+      "cues": [
+        {
+          "id": "enter",
+          "atMs": 0,
+          "action": "reveal",
+          "target": "headline"
+        },
+        {
+          "id": "cue-01",
+          "atMs": 5786,
+          "action": "highlight",
+          "target": "Clock cycles"
+        },
+        {
+          "id": "cue-02",
+          "atMs": 12497,
+          "action": "highlight",
+          "target": "Architecture"
+        },
+        {
+          "id": "cue-03",
+          "atMs": 19209,
+          "action": "highlight",
+          "target": "Thermal limits"
+        }
+      ]
+    },
+    {
+      "id": "scene-07",
+      "order": 7,
+      "part": "02",
+      "title": "Motherboard par CPU",
+      "mode": "3D",
+      "visualTemplate": "board3d",
+      "narration": {
+        "text": "Ye ek conceptual three dimensional motherboard view hai. CPU motherboard ke socket mein fit hota hai. Motherboard memory, expansion devices aur power delivery se connection provide karti hai. Exact layout computer aur motherboard model ke hisaab se alag ho sakta hai.",
+        "startMs": 138741,
+        "endMs": 159282,
+        "voiceType": "offline-espeak-placeholder"
+      },
+      "startMs": 138041,
+      "endMs": 160282,
+      "durationMs": 22241,
+      "headline": "CPU on the motherboard",
+      "kicker": "CONCEPTUAL 3D MODEL",
+      "labels": [
+        "CPU Socket",
+        "Memory",
+        "Mainboard"
+      ],
+      "accessibility": {
+        "visualDescription": "Rotating WebGL conceptual motherboard and CPU placement with labeled overlays."
+      },
+      "cues": [
+        {
+          "id": "enter",
+          "atMs": 0,
+          "action": "reveal",
+          "target": "headline"
+        },
+        {
+          "id": "cue-01",
+          "atMs": 5560,
+          "action": "highlight",
+          "target": "CPU Socket"
+        },
+        {
+          "id": "cue-02",
+          "atMs": 12010,
+          "action": "highlight",
+          "target": "Memory"
+        },
+        {
+          "id": "cue-03",
+          "atMs": 18460,
+          "action": "highlight",
+          "target": "Mainboard"
+        }
+      ]
+    },
+    {
+      "id": "scene-08",
+      "order": 8,
+      "part": "02",
+      "title": "Application se output tak",
+      "mode": "2D",
+      "visualTemplate": "pipeline",
+      "narration": {
+        "text": "Jab aap application open karte hain, operating system CPU ko runnable work schedule kar sakta hai. CPU instructions execute karta hai aur zaroori data RAM ya storage se mil sakta hai. Result display, network ya kisi doosre output tak pahunch sakta hai.",
+        "startMs": 160982,
+        "endMs": 181513,
+        "voiceType": "offline-espeak-placeholder"
+      },
+      "startMs": 160282,
+      "endMs": 182513,
+      "durationMs": 22231,
+      "headline": "From click to result",
+      "kicker": "SIMPLIFIED DATA FLOW",
+      "labels": [
+        "App",
+        "OS",
+        "CPU",
+        "Memory",
+        "Output"
+      ],
+      "accessibility": {
+        "visualDescription": "Animated app to scheduler to CPU to memory and output pipeline."
+      },
+      "cues": [
+        {
+          "id": "enter",
+          "atMs": 0,
+          "action": "reveal",
+          "target": "headline"
+        },
+        {
+          "id": "cue-01",
+          "atMs": 5558,
+          "action": "highlight",
+          "target": "App"
+        },
+        {
+          "id": "cue-02",
+          "atMs": 8781,
+          "action": "highlight",
+          "target": "OS"
+        },
+        {
+          "id": "cue-03",
+          "atMs": 12005,
+          "action": "highlight",
+          "target": "CPU"
+        },
+        {
+          "id": "cue-04",
+          "atMs": 15228,
+          "action": "highlight",
+          "target": "Memory"
+        },
+        {
+          "id": "cue-05",
+          "atMs": 18452,
+          "action": "highlight",
+          "target": "Output"
+        }
+      ]
+    },
+    {
+      "id": "scene-09",
+      "order": 9,
+      "part": "02",
+      "title": "Registers aur cache",
+      "mode": "3D",
+      "visualTemplate": "chip3d",
+      "narration": {
+        "text": "CPU ke andar registers bahut fast working values rakhte hain. Cache frequently needed instructions aur data ko processor ke kareeb rakhti hai. CPU instructions execute karta hai aur ismein temporary values aur data access important hote hain. Screen par blocks conceptual map hain, physical layout ki exact representation nahi.",
+        "startMs": 183213,
+        "endMs": 209203,
+        "voiceType": "offline-espeak-placeholder"
+      },
+      "startMs": 182513,
+      "endMs": 210203,
+      "durationMs": 27690,
+      "headline": "Inside the processing model",
+      "kicker": "CONCEPTUAL 3D CUTAWAY",
+      "labels": [
+        "Registers",
+        "Cache",
+        "Execution"
+      ],
+      "accessibility": {
+        "visualDescription": "WebGL layered conceptual CPU functional blocks; not an actual die floorplan."
+      },
+      "cues": [
+        {
+          "id": "enter",
+          "atMs": 0,
+          "action": "reveal",
+          "target": "headline"
+        },
+        {
+          "id": "cue-01",
+          "atMs": 6922,
+          "action": "highlight",
+          "target": "Registers"
+        },
+        {
+          "id": "cue-02",
+          "atMs": 14953,
+          "action": "highlight",
+          "target": "Cache"
+        },
+        {
+          "id": "cue-03",
+          "atMs": 22983,
+          "action": "highlight",
+          "target": "Execution"
+        }
+      ]
+    },
+    {
+      "id": "scene-10",
+      "order": 10,
+      "part": "02",
+      "title": "Registers Cache RAM",
+      "mode": "2D",
+      "visualTemplate": "memory",
+      "narration": {
+        "text": "CPU ko baar baar instructions aur data chahiye hota hai. Registers chhote aur fast hote hain. Cache nearby data access ka wait kam kar sakti hai. RAM ki capacity relatively zyada hoti hai, lekin access characteristics alag hote hain. Data access bottleneck overall speed ko affect kar sakta hai.",
+        "startMs": 210903,
+        "endMs": 235587,
+        "voiceType": "offline-espeak-placeholder"
+      },
+      "startMs": 210203,
+      "endMs": 236587,
+      "durationMs": 26384,
+      "headline": "Memory hierarchy matters",
+      "kicker": "CONCEPTUAL SPEED / CAPACITY",
+      "labels": [
+        "Registers",
+        "Cache",
+        "RAM"
+      ],
+      "accessibility": {
+        "visualDescription": "Nested memory hierarchy boxes and arrows; schematic, no absolute speed promises."
+      },
+      "cues": [
+        {
+          "id": "enter",
+          "atMs": 0,
+          "action": "reveal",
+          "target": "headline"
+        },
+        {
+          "id": "cue-01",
+          "atMs": 6596,
+          "action": "highlight",
+          "target": "Registers"
+        },
+        {
+          "id": "cue-02",
+          "atMs": 14247,
+          "action": "highlight",
+          "target": "Cache"
+        },
+        {
+          "id": "cue-03",
+          "atMs": 21899,
+          "action": "highlight",
+          "target": "RAM"
+        }
+      ]
+    },
+    {
+      "id": "scene-11",
+      "order": 11,
+      "part": "02",
+      "title": "Real applications",
+      "mode": "2D",
+      "visualTemplate": "workloads",
+      "narration": {
+        "text": "Office work, programming, gaming, rendering aur servers ka workload alag hota hai. Kisi task ko fast single core chahiye ho sakta hai, aur kisi ko multiple cores. Isliye ek single benchmark se har use case mein best CPU decide nahi hota.",
+        "startMs": 237287,
+        "endMs": 256703,
+        "voiceType": "offline-espeak-placeholder"
+      },
+      "startMs": 236587,
+      "endMs": 257703,
+      "durationMs": 21116,
+      "headline": "Different work. Different needs.",
+      "kicker": "WORKLOAD COMPARISON",
+      "labels": [
+        "Office",
+        "Development",
+        "Gaming",
+        "Rendering"
+      ],
+      "accessibility": {
+        "visualDescription": "Workload cards with differing illustrative CPU resource utilization."
+      },
+      "cues": [
+        {
+          "id": "enter",
+          "atMs": 0,
+          "action": "reveal",
+          "target": "headline"
+        },
+        {
+          "id": "cue-01",
+          "atMs": 5279,
+          "action": "highlight",
+          "target": "Office"
+        },
+        {
+          "id": "cue-02",
+          "atMs": 9361,
+          "action": "highlight",
+          "target": "Development"
+        },
+        {
+          "id": "cue-03",
+          "atMs": 13444,
+          "action": "highlight",
+          "target": "Gaming"
+        },
+        {
+          "id": "cue-04",
+          "atMs": 17526,
+          "action": "highlight",
+          "target": "Rendering"
+        }
+      ]
+    },
+    {
+      "id": "scene-12",
+      "order": 12,
+      "part": "02",
+      "title": "CPU choose kaise karein?",
+      "mode": "2D",
+      "visualTemplate": "buying",
+      "narration": {
+        "text": "CPU select karte waqt apne applications ke benchmarks, core count, per core performance, memory compatibility, power use aur cooling dekhiye. Motherboard socket, support aur total platform cost bhi verify kijiye. Brand ya gigahertz ke basis par akela decision lena reliable nahi hai.",
+        "startMs": 258403,
+        "endMs": 280631,
+        "voiceType": "offline-espeak-placeholder"
+      },
+      "startMs": 257703,
+      "endMs": 281631,
+      "durationMs": 23928,
+      "headline": "Choose for your workload",
+      "kicker": "PRACTICAL BUYING CHECKLIST",
+      "labels": [
+        "Benchmarks",
+        "Compatibility",
+        "Power + Cooling",
+        "Platform Cost"
+      ],
+      "accessibility": {
+        "visualDescription": "Check-list with animated selection rules."
+      },
+      "cues": [
+        {
+          "id": "enter",
+          "atMs": 0,
+          "action": "reveal",
+          "target": "headline"
+        },
+        {
+          "id": "cue-01",
+          "atMs": 5982,
+          "action": "highlight",
+          "target": "Benchmarks"
+        },
+        {
+          "id": "cue-02",
+          "atMs": 10608,
+          "action": "highlight",
+          "target": "Compatibility"
+        },
+        {
+          "id": "cue-03",
+          "atMs": 15234,
+          "action": "highlight",
+          "target": "Power + Cooling"
+        },
+        {
+          "id": "cue-04",
+          "atMs": 19860,
+          "action": "highlight",
+          "target": "Platform Cost"
+        }
+      ]
+    },
+    {
+      "id": "scene-13",
+      "order": 13,
+      "part": "02",
+      "title": "CPU recap",
+      "mode": "2.5D",
+      "visualTemplate": "recap",
+      "narration": {
+        "text": "Aaj humne samjha ki CPU instructions execute karta hai, fetch decode execute ek helpful basic model hai, aur cores, threads, cache, RAM aur clock frequency sab performance ko influence karte hain. Kisi bhi processor ko compare karne se pehle apne real workload aur compatibility ko evaluate kijiye.",
+        "startMs": 282331,
+        "endMs": 306425,
+        "voiceType": "offline-espeak-placeholder"
+      },
+      "startMs": 281631,
+      "endMs": 307425,
+      "durationMs": 25794,
+      "headline": "Now you understand CPU.",
+      "kicker": "COURSE SUMMARY",
+      "labels": [
+        "Instructions",
+        "Cores + Threads",
+        "Memory",
+        "Real Workload"
+      ],
+      "accessibility": {
+        "visualDescription": "Four short summary cards and end frame."
+      },
+      "cues": [
+        {
+          "id": "enter",
+          "atMs": 0,
+          "action": "reveal",
+          "target": "headline"
+        },
+        {
+          "id": "cue-01",
+          "atMs": 6448,
+          "action": "highlight",
+          "target": "Instructions"
+        },
+        {
+          "id": "cue-02",
+          "atMs": 11435,
+          "action": "highlight",
+          "target": "Cores + Threads"
+        },
+        {
+          "id": "cue-03",
+          "atMs": 16422,
+          "action": "highlight",
+          "target": "Memory"
+        },
+        {
+          "id": "cue-04",
+          "atMs": 21409,
+          "action": "highlight",
+          "target": "Real Workload"
+        }
+      ]
+    }
+  ],
+  "qualityGates": {
+    "humanNarrationApproved": false,
+    "wordTimedCaptionsApproved": false,
+    "cpu3dPhysicalAccuracyApproved": false,
+    "studentComprehensionTestPassed": false,
+    "published": false
+  }
+};

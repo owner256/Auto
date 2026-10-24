@@ -176,3 +176,4 @@ manim_studio/
 
 - [x] **v1.0 (Current)**: Data-Driven Engine (JSON specification, Neural TTS voice sync, SciPy ambient score, local web dashboard & CLI).
 - [ ] **v2.0 (Planned)**: Autonomous AI Mode (Topic prompt -> LLM scene script planner -> Automatic JSON generation -> Zero-touch 4K video rendering).
+

@@ -1,0 +1,54 @@
+{
+  "id": "project_gpu",
+  "title": "GPU Architecture: The Engine of Modern AI",
+  "ratio": "16:9",
+  "voice": "hinglish_male",
+  "theme": {
+    "background": "#080e18"
+  },
+  "scenes": [
+    {
+      "type": "title_intro",
+      "title": "GPU Architecture",
+      "subtitle": "Why GPUs Rule Modern AI & 3D Graphics",
+      "prompt": "CPU vs GPU: What makes GPUs so insanely fast?",
+      "tag": "Massive Parallelism",
+      "voice": "क्या आपने कभी सोचा है कि मॉडर्न AI और हैवी 3D गेम्स के पीछे का असली पावरहाउस कौन है? यह CPU नहीं, बल्कि GPU यानी Graphics Processing Unit है!"
+    },
+    {
+      "type": "prob_distribution",
+      "header": "Compute Workload: Serial vs Parallel",
+      "tokens": ["CPU: 16 Cores", "vs", "GPU: 10,000 Cores"],
+      "items": [
+        {"word": "Matrix Math", "prob": 0.88},
+        {"word": "3D Pixels", "prob": 0.08},
+        {"word": "Serial Logic", "prob": 0.04}
+      ],
+      "sampled": "Matrix Math",
+      "voice": "CPU कुछ गिने-चुने लेकिन सुपर-फास्ट कोर्स के साथ सीरियल काम करता है। जबकि GPU में हज़ारों छोटे कोर्स होते हैं जो एक साथ मिलकर लाखों कैलकुलेशन्स पैरेलल में प्रोसेस करते हैं।"
+    },
+    {
+      "type": "vector_embeddings",
+      "header": "Throughput vs Latency (Parallel Power)",
+      "context": "SIMD: Single Instruction, Multiple Data",
+      "main_word": "Throughput",
+      "attractor": "Latency",
+      "voice": "इसे कहते हैं Massive Parallelism या SIMD—Single Instruction, Multiple Data। जहाँ CPU लेटेंसी घटाता है, वहीं GPU भारी थ्रूपुट डिलीवर करता है।"
+    },
+    {
+      "type": "feedback_loop",
+      "header": "Tensor Cores: The Engine of Modern AI",
+      "step": "Weights Matrix x Input Vector = Instant Output",
+      "scale": "100+ TeraFLOPS of Parallel Compute",
+      "voice": "मॉडर्न AI में Tensor Cores भारी मैट्रिक्स मल्टिप्लिकेशन को मिलीसेकंड्स में सॉल्व करते हैं, जिससे ChatGPT और deep learning मॉडल्स बिजली की रफ़्तार से चलते हैं।"
+    },
+    {
+      "type": "quote_conclusion",
+      "title": "The Engine of Modern Computing.",
+      "quote": "Software is eating the world, but GPUs are accelerating AI.",
+      "tag": "Manim Studio Production",
+      "voice": "GPU आज सिर्फ गेमिंग कार्ड नहीं, बल्कि मॉडर्न आर्टिफिशियल इंटेलिजेंस और कंप्यूटिंग की असली रीढ़ बन चुका है!"
+    }
+  ]
+}
+
