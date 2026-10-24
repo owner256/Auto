@@ -1,9 +1,32 @@
+# Node / JS
 node_modules/
 **/node_modules/
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# Python
+__pycache__/
+**/__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+
+# Manim Studio temporary render builds and generated media
+projects/
+**/projects/
+media/
+**/media/
+*.mp4
+*.wav
+*.mp3
+
+# System & Environment
 .system_generated/
 *.log
 .env
 .DS_Store
+.vscode/
+.idea/

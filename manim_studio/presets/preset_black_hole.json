@@ -1,0 +1,54 @@
+{
+  "id": "project_black_hole",
+  "title": "Black Holes: The Monsters of Space",
+  "ratio": "16:9",
+  "voice": "hinglish_male",
+  "theme": {
+    "background": "#06080e"
+  },
+  "scenes": [
+    {
+      "type": "title_intro",
+      "title": "Black Holes",
+      "subtitle": "The Monsters of the Universe",
+      "prompt": "What happens when gravity becomes infinite?",
+      "tag": "Spacetime Singularity",
+      "voice": "क्या आपने कभी सोचा है कि अगर ब्रह्मांड का सबसे बड़ा तारा अपनी ही ग्रेविटी में सिमट जाए तो क्या होगा? जन्म होता है ब्रह्मांड के सबसे रहस्यमयी राक्षस का—Black Hole!"
+    },
+    {
+      "type": "prob_distribution",
+      "header": "Gravitational Collapse Outcome",
+      "tokens": ["Dying", "Supermassive", "Star"],
+      "items": [
+        {"word": "Black Hole", "prob": 0.85},
+        {"word": "Neutron Star", "prob": 0.12},
+        {"word": "White Dwarf", "prob": 0.03}
+      ],
+      "sampled": "Black Hole",
+      "voice": "जब किसी विशाल तारे का ईंधन खत्म होता है, तो वह अंदर की तरफ ढहने लगता है। अगर तारे का द्रव्यमान अत्यधिक हो, तो कोई भी बल ग्रेविटी को नहीं रोक पाता, और वह एक ब्लैक होल बन जाता है।"
+    },
+    {
+      "type": "vector_embeddings",
+      "header": "Spacetime Curvature & Event Horizon",
+      "context": "The Point of No Return",
+      "main_word": "Light",
+      "attractor": "Event Horizon",
+      "voice": "ब्लैक होल के चारों तरफ एक अदृश्य सीमा होती है जिसे Event Horizon कहते हैं। यहाँ ग्रेविटी इतनी प्रचंड होती है कि ब्रह्मांड की सबसे तेज़ चीज़ यानी लाइट भी इससे बचकर बाहर नहीं निकल सकती!"
+    },
+    {
+      "type": "feedback_loop",
+      "header": "Infinite Density: The Singularity",
+      "step": "Massive Star -> Extreme Compression -> Zero Volume",
+      "scale": "Infinite Density (General Relativity Breaks Down)",
+      "voice": "Event Horizon के अंदर सब कुछ केंद्र के एक बिंदु में खिंच जाता है, जिसे Singularity कहते हैं। यहाँ स्पेस और टाइम के सारे सामान्य नियम टूट जाते हैं।"
+    },
+    {
+      "type": "quote_conclusion",
+      "title": "Where Time Itself Stops.",
+      "quote": "Black holes are where God divided by zero.",
+      "tag": "Manim Studio Production",
+      "voice": "ब्लैक होल सिर्फ एक खगोलीय पिंड नहीं, बल्कि समय और स्पेस की अंतिम सीमा है। जहाँ समय लगभग पूरी तरह ठहर जाता है!"
+    }
+  ]
+}
+

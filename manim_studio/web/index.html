@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manim Studio v1.0 - Programmatic Video Generator</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <div class="brand">
+            <span class="logo-badge">MANIM</span>
+            <div class="brand-text">
+                <h1>STUDIO</h1>
+                <p>Data-Driven Programmatic Video Generator (v1.0)</p>
+            </div>
+        </div>
+        <div style="font-size: 0.85rem; color: #10b981; font-weight: 600;">
+            ● Studio Engine Active
+        </div>
+    </header>
+
+    <div class="main-container">
+        <!-- LEFT PANEL: PROJECT CONFIG & SCENES -->
+        <div class="panel">
+            <div class="panel-header">
+                <h2>Project Configuration</h2>
+                <select id="preset-select" style="max-width: 200px;">
+                    <option value="">Loading presets...</option>
+                </select>
+            </div>
+
+            <div class="controls-row">
+                <div class="field">
+                    <label>Video Title</label>
+                    <input type="text" id="proj-title" placeholder="e.g. LLM Explainer">
+                </div>
+                <div class="field">
+                    <label>Aspect Ratio</label>
+                    <select id="ratio-select">
+                        <option value="16:9">16:9 Landscape (YouTube)</option>
+                        <option value="9:16">9:16 Vertical (Shorts/Reels)</option>
+                    </select>
+                </div>
+                <div class="field">
+                    <label>Voiceover Actor</label>
+                    <select id="voice-select">
+                        <option value="hinglish_male">Hinglish Male (Madhur)</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="editor-tabs">
+                <button class="tab-btn active" id="tab-cards">Visual Scenes</button>
+                <button class="tab-btn" id="tab-json">Raw JSON Editor</button>
+            </div>
+
+            <div id="scenes-list" class="scenes-list">
+                <!-- Dynamic scene cards inserted via app.js -->
+            </div>
+
+            <textarea id="json-editor" style="display: none;" spellcheck="false"></textarea>
+
+            <button class="btn-generate" id="btn-generate">
+                🎬 GENERATE VIDEO
+            </button>
+        </div>
+
+        <!-- RIGHT PANEL: LIVE RENDER & PLAYER -->
+        <div class="panel">
+            <div class="panel-header">
+                <h2>Live Production & Output</h2>
+                <span id="status-text" style="font-size: 0.8rem; color: var(--text-muted);">Ready to render</span>
+            </div>
+
+            <div class="progress-container">
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="progress-fill"></div>
+                </div>
+            </div>
+
+            <div class="terminal-box" id="terminal">
+[System] Manim Studio v1.0 Initialized.
+[Engine] Manim Community 0.22.0 + Neural Edge-TTS + FFmpeg connected.
+[Ready] Select a preset or customize scenes, then click "Generate Video".
+            </div>
+
+            <div class="player-box">
+                <div id="player-placeholder" style="color: var(--text-muted); font-size: 0.9rem;">
+                    🎥 Rendered video will play here automatically
+                </div>
+                <video id="main-player" controls style="display: none;"></video>
+            </div>
+
+            <div class="player-actions" id="player-actions" style="display: none;">
+                <button class="sec-btn" id="btn-explorer">📁 Open in File Explorer</button>
+                <button class="sec-btn" id="btn-download">⬇ Download MP4</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
+
