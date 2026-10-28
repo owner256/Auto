@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gemini TTS & Voice AI Agent</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Navbar -->
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-icon">
+          <i class="fa-solid fa-waveform-lines"></i>
+        </div>
+        <div class="brand-text">
+          <h1>Gemini Voice <span class="gradient-text">Studio & Agent</span></h1>
+          <p class="brand-sub">Powered by Google Gemini Multimodal Audio API</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <!-- API Key Status Badge -->
+        <button id="apiKeyBadgeBtn" class="status-badge checking" onclick="openKeyModal()">
+          <span class="status-dot"></span>
+          <span id="apiKeyStatusText">Checking API Key...</span>
+          <i class="fa-solid fa-key" style="margin-left: 6px;"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs">
+      <button class="tab-btn active" data-tab="tts-tab" onclick="switchTab('tts-tab')">
+        <i class="fa-solid fa-volume-high"></i>
+        <span>Text to Voice Studio</span>
+      </button>
+      <button class="tab-btn" data-tab="agent-tab" onclick="switchTab('agent-tab')">
+        <i class="fa-solid fa-robot"></i>
+        <span>Voice AI Agent</span>
+      </button>
+      <button class="tab-btn" data-tab="history-tab" onclick="switchTab('history-tab')">
+        <i class="fa-solid fa-clock-rotate-left"></i>
+        <span>Audio Library</span>
+        <span class="badge-count" id="historyCountBadge">0</span>
+      </button>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+
+      <!-- ================= TAB 1: TEXT TO VOICE STUDIO ================= -->
+      <section id="tts-tab" class="tab-pane active">
+        <div class="grid-layout">
+          <!-- Left Column: Input and Voice Controls -->
+          <div class="card glass-panel control-column">
+            <div class="card-header">
+              <h2><i class="fa-solid fa-pen-nib"></i> Text Input</h2>
+              <div class="sample-chips">
+                <span class="chip-label">Quick Try:</span>
+                <button class="chip" onclick="loadSample('hindi')">🇮🇳 Hindi</button>
+                <button class="chip" onclick="loadSample('hinglish')">🇮🇳 Hinglish</button>
+                <button class="chip" onclick="loadSample('english')">🇺🇸 English</button>
+                <button class="chip" onclick="loadSample('story')">📖 Story</button>
+              </div>
+            </div>
+
+            <!-- Textarea -->
+            <div class="input-wrapper">
+              <textarea 
+                id="ttsTextInput" 
+                placeholder="Yahan apna text likhein ya paste karein (Hindi, English, Hinglish etc.)..." 
+                rows="6"
+                maxlength="2000"
+              ></textarea>
+              <div class="textarea-footer">
+                <span id="charCounter">0 / 2000 characters</span>
+                <button class="btn-text" onclick="clearTtsInput()">
+                  <i class="fa-solid fa-eraser"></i> Clear
+                </button>
+              </div>
+            </div>
+
+            <!-- Voice Controls Grid -->
+            <div class="controls-grid">
+              <!-- Voice Selection -->
+              <div class="control-group">
+                <label><i class="fa-solid fa-microphone"></i> Select Voice</label>
+                <div class="voice-picker" id="voicePicker">
+                  <!-- Populated dynamically via JS -->
+                </div>
+              </div>
+
+              <!-- Style / Emotion Selection -->
+              <div class="control-group">
+                <label><i class="fa-solid fa-masks-theater"></i> Speaking Tone & Emotion</label>
+                <select id="ttsStyleSelect" class="form-select">
+                  <option value="natural">Natural & Conversational</option>
+                  <option value="cheerful">Happy & Cheerful</option>
+                  <option value="professional">Professional & Crisp</option>
+                  <option value="calm">Calm & Soothing</option>
+                  <option value="storyteller">Storyteller / Dramatic</option>
+                  <option value="whisper">Soft Whisper</option>
+                  <option value="urgent">Energetic & Fast</option>
+                </select>
+              </div>
+
+              <!-- Language & Pace row -->
+              <div class="control-row">
+                <div class="control-group flex-1">
+                  <label><i class="fa-solid fa-language"></i> Language</label>
+                  <select id="ttsLanguageSelect" class="form-select">
+                    <option value="auto">Auto Detect</option>
+                    <option value="Hindi">Hindi (हिंदी)</option>
+                    <option value="Hinglish">Hinglish (Hindi + English)</option>
+                    <option value="English">English</option>
+                    <option value="Spanish">Spanish</option>
+                    <option value="French">French</option>
+                  </select>
+                </div>
+
+                <div class="control-group flex-1">
+                  <label><i class="fa-solid fa-gauge-high"></i> Speaking Pace</label>
+                  <div class="speed-toggle">
+                    <button type="button" class="speed-btn" data-speed="slow" onclick="setSpeed('slow')">Slow</button>
+                    <button type="button" class="speed-btn active" data-speed="normal" onclick="setSpeed('normal')">Normal</button>
+                    <button type="button" class="speed-btn" data-speed="fast" onclick="setSpeed('fast')">Fast</button>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Generate Button -->
+              <button id="generateVoiceBtn" class="btn btn-primary btn-generate" onclick="generateVoice()">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                <span>Generate Natural Voice</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Right Column: Audio Output Player & Waveform -->
+          <div class="card glass-panel output-column">
+            <div class="card-header">
+              <h2><i class="fa-solid fa-compact-disc"></i> Audio Output</h2>
+              <span id="outputStatus" class="output-badge">Ready</span>
+            </div>
+
+            <div class="output-body" id="outputBody">
+              <!-- Empty State -->
+              <div class="empty-state" id="emptyAudioState">
+                <div class="empty-icon">
+                  <i class="fa-solid fa-music"></i>
+                </div>
+                <h3>No Audio Generated Yet</h3>
+                <p>Type text on the left and click "Generate Natural Voice" to create studio-quality speech powered by Gemini.</p>
+              </div>
+
+              <!-- Loading State -->
+              <div class="loading-state hidden" id="audioLoadingState">
+                <div class="pulse-wave">
+                  <div class="bar"></div>
+                  <div class="bar"></div>
+                  <div class="bar"></div>
+                  <div class="bar"></div>
+                  <div class="bar"></div>
+                  <div class="bar"></div>
+                </div>
+                <h3>Synthesizing Voice with Gemini API...</h3>
+                <p>Applying neural inflections, emotion, and acoustic modeling.</p>
+              </div>
+
+              <!-- Active Player View -->
+              <div class="active-player hidden" id="activePlayerView">
+                <div class="audio-info-card">
+                  <div class="audio-meta">
+                    <span class="meta-tag" id="playerVoiceTag">Voice: Puck</span>
+                    <span class="meta-tag" id="playerStyleTag">Style: Natural</span>
+                    <span class="meta-tag" id="playerDurationTag">0.0s</span>
+                  </div>
+                  <p class="spoken-text-preview" id="playerTextPreview"></p>
+                </div>
+
+                <!-- Custom Audio Wave Display -->
+                <div class="wave-container" id="waveContainer">
+                  <div class="simulated-waves" id="visualizerWaves">
+                    <!-- Audio bars dynamically animated -->
+                  </div>
+                </div>
+
+                <!-- Audio Element (hidden native) -->
+                <audio id="ttsAudioElement" preload="auto"></audio>
+
+                <!-- Custom Controls -->
+                <div class="custom-audio-controls">
+                  <div class="time-display">
+                    <span id="currentTime">00:00</span>
+                    <div class="progress-bar-container" onclick="seekAudio(event)" id="progressContainer">
+                      <div class="progress-bar-fill" id="progressBarFill"></div>
+                    </div>
+                    <span id="totalTime">00:00</span>
+                  </div>
+
+                  <div class="playback-buttons">
+                    <button class="circle-btn" onclick="skipAudio(-5)" title="Back 5s">
+                      <i class="fa-solid fa-backward-step"></i>
+                    </button>
+                    <button class="circle-btn play-btn" id="playPauseBtn" onclick="togglePlay()">
+                      <i class="fa-solid fa-play" id="playIcon"></i>
+                    </button>
+                    <button class="circle-btn" onclick="skipAudio(5)" title="Forward 5s">
+                      <i class="fa-solid fa-forward-step"></i>
+                    </button>
+                    <button class="circle-btn" onclick="toggleMute()" id="muteBtn" title="Mute/Unmute">
+                      <i class="fa-solid fa-volume-high" id="volumeIcon"></i>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Download & Actions -->
+                <div class="player-actions">
+                  <a id="downloadAudioBtn" class="btn btn-secondary" download="gemini_voice.wav">
+                    <i class="fa-solid fa-download"></i> Download WAV
+                  </a>
+                  <button class="btn btn-secondary" onclick="copyAudioLink()">
+                    <i class="fa-solid fa-copy"></i> Copy Text
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= TAB 2: VOICE AI AGENT ================= -->
+      <section id="agent-tab" class="tab-pane">
+        <div class="agent-layout">
+          <!-- Agent Sidebar Settings -->
+          <div class="card glass-panel agent-settings">
+            <div class="card-header">
+              <h2><i class="fa-solid fa-sliders"></i> Agent Persona</h2>
+            </div>
+
+            <div class="control-group">
+              <label>Agent Voice</label>
+              <select id="agentVoiceSelect" class="form-select">
+                <option value="Kore">🌸 Kore (Warm Female)</option>
+                <option value="Puck">🎙️ Puck (Energetic Male)</option>
+                <option value="Charon">📻 Charon (Deep Authoritative)</option>
+                <option value="Aoede">🎵 Aoede (Melodic Female)</option>
+                <option value="Fenrir">⚡ Fenrir (Dynamic Male)</option>
+                <option value="Zephyr">✨ Zephyr (Crisp Neutral)</option>
+              </select>
+            </div>
+
+            <div class="control-group">
+              <label>Personality</label>
+              <select id="agentPersonalitySelect" class="form-select">
+                <option value="friendly_assistant">🤝 Helpful Assistant</option>
+                <option value="hindi_companion">🇮🇳 Aarav / Priya (Hindi & Hinglish)</option>
+                <option value="tech_expert">💻 Tech & Code Mentor</option>
+                <option value="storyteller">📖 Creative Storyteller</option>
+              </select>
+            </div>
+
+            <div class="control-group">
+              <label>Voice Autoplay</label>
+              <label class="toggle-switch">
+                <input type="checkbox" id="autoPlayAgentVoice" checked>
+                <span class="toggle-slider"></span>
+                <span class="toggle-label">Play voice automatically</span>
+              </label>
+            </div>
+
+            <button class="btn btn-secondary btn-full" onclick="clearAgentChat()">
+              <i class="fa-solid fa-trash-can"></i> Clear Conversation
+            </button>
+          </div>
+
+          <!-- Chat Window -->
+          <div class="card glass-panel agent-chat-card">
+            <!-- Chat Messages Display -->
+            <div class="chat-messages" id="chatMessages">
+              <div class="message-bubble agent">
+                <div class="message-avatar">🤖</div>
+                <div class="message-content">
+                  <div class="message-header">
+                    <span class="sender-name">Gemini Voice Agent</span>
+                    <span class="message-time">Just now</span>
+                  </div>
+                  <div class="message-text">
+                    नमस्ते! Hi there! I am your Gemini-powered Voice AI Agent. Aap mujhse Hindi ya English me kuch bhi pooch sakte hain — I will reply both in text and spoken voice. Mic button daba kar boliye ya type kijiye!
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Chat Input Area -->
+            <div class="chat-input-bar">
+              <!-- Mic Button for Speech-To-Text -->
+              <button id="micBtn" class="mic-btn" onclick="toggleMic()" title="Speak with Microphone">
+                <i class="fa-solid fa-microphone"></i>
+              </button>
+
+              <input 
+                type="text" 
+                id="agentInput" 
+                placeholder="Ask anything or use the microphone to talk in Hindi/English..." 
+                onkeydown="handleAgentKey(event)"
+              />
+
+              <button id="sendAgentBtn" class="send-btn" onclick="sendAgentMessage()">
+                <i class="fa-solid fa-paper-plane"></i>
+              </button>
+            </div>
+            <div id="micStatusIndicator" class="mic-status hidden">
+              <span class="recording-pulse"></span> Listening to your voice... Speak now!
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= TAB 3: AUDIO LIBRARY / HISTORY ================= -->
+      <section id="history-tab" class="tab-pane">
+        <div class="card glass-panel">
+          <div class="card-header">
+            <h2><i class="fa-solid fa-folder-open"></i> Generated Voice Library</h2>
+            <button class="btn btn-secondary" onclick="fetchHistory()">
+              <i class="fa-solid fa-arrows-rotate"></i> Refresh
+            </button>
+          </div>
+
+          <div id="historyListContainer" class="history-list">
+            <!-- Dynamically populated -->
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <p>Gemini Voice Agent • Built with Node.js & Google Gemini TTS API • Zero external audio dependencies</p>
+    </footer>
+  </div>
+
+  <!-- ================= API KEY SETUP MODAL ================= -->
+  <div class="modal-overlay hidden" id="apiKeyModal">
+    <div class="modal-card">
+      <div class="modal-header">
+        <div class="modal-title">
+          <i class="fa-solid fa-key gradient-text"></i>
+          <h3>Gemini API Key Configuration</h3>
+        </div>
+        <button class="close-btn" onclick="closeKeyModal()">&times;</button>
+      </div>
+
+      <div class="modal-body">
+        <p class="modal-desc">
+          To generate voice audio, this project requires a Google Gemini API Key. You can get one 100% free from Google AI Studio.
+        </p>
+
+        <div class="key-setup-options">
+          <div class="option-box">
+            <h4><i class="fa-solid fa-bolt"></i> Option 1: Paste Key Directly in UI (Instant)</h4>
+            <p>Paste your key here to start generating audio right away in this session:</p>
+            <div class="input-with-button">
+              <input type="password" id="modalKeyInput" placeholder="AIzaSy..." />
+              <button class="btn btn-secondary" onclick="toggleKeyVisibility()">
+                <i class="fa-solid fa-eye" id="keyEyeIcon"></i>
+              </button>
+            </div>
+            <div class="button-row">
+              <button class="btn btn-primary" onclick="saveKeyFromModal()">Save & Use Key</button>
+              <button class="btn btn-secondary" onclick="testConnection()">Test Connection</button>
+            </div>
+            <span id="testConnectionStatus" class="test-status"></span>
+          </div>
+
+          <div class="option-box">
+            <h4><i class="fa-solid fa-file-code"></i> Option 2: Add in <code>.env</code> file (Permanent)</h4>
+            <p>Open the project's <code>.env</code> file and add your key:</p>
+            <pre><code>GEMINI_API_KEY=YOUR_GEMINI_API_KEY_HERE</code></pre>
+            <p class="help-text">Once saved in <code>.env</code>, it will be automatically loaded on server start!</p>
+          </div>
+        </div>
+
+        <div class="free-key-link">
+          <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          <span>Don't have a key? Get one free: </span>
+          <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener">Google AI Studio API Key</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
+

@@ -15,3 +15,10 @@ Repository for Automation Projects and Microservices.
 - **Active Version:** [`YT-Automation/26.10.14.01/`](./YT-Automation/26.10.14.01) (Current development)
 - **Stable Backup Version:** [`YT-Automation/26.10.14.00/`](./YT-Automation/26.10.14.00) (Locked stable release)
 - High-Speed, Scalable YouTube Multi-Browser Cluster Engine with Pre-Warmed Isolated Browser Contexts, Turbo Resource Blocker, Auto-Retry Fallback Engine, and Real-Time SSE Telemetry.
+
+
+### 3. Gemini TTS & Voice AI Agent (`gemini-voice-agent`)
+- **Directory:** [`gemini-voice-agent/`](./gemini-voice-agent)
+- **Status:** v1.0 (Google Gemini Multimodal Audio Synthesis & Conversational Voice Agent)
+- **Launcher:** [`gemini-voice-agent/start.bat`](./gemini-voice-agent/start.bat)
+- High-Fidelity Text-to-Speech & Voice AI Agent powered by Google Gemini Audio API. Features studio-quality 24kHz WAV synthesis, 7 prebuilt voices, speech emotion/tone controls, browser microphone speech-to-text dictation, and conversational agent memory with responsive dark glassmorphism dashboard (`http://localhost:4000`).

@@ -1,0 +1,31 @@
+{
+  "name": "gemini-tts-voice-agent",
+  "version": "1.0.0",
+  "description": "High-Fidelity Text-to-Speech & Interactive Voice AI Agent using Google Gemini TTS API",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js"
+  },
+  "keywords": [
+    "gemini",
+    "tts",
+    "voice-agent",
+    "text-to-speech",
+    "google-gemini",
+    "multimodal",
+    "ai-voice"
+  ],
+  "author": "Sunil Kori",
+  "license": "MIT",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.9"
+  }
+}
+
